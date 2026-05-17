@@ -1,8 +1,11 @@
-// Funciones de consulta a Supabase
-// Si las variables de entorno no están configuradas, se usan datos mock sin romper la app
+import 'server-only'
 
-import { Estatua } from '@/types'
+// Funciones de consulta a Supabase para Server Components.
+// Si las variables de entorno no están configuradas, se usan datos mock sin romper la app.
+
 import { ESTATUAS_MOCK } from '@/lib/data/estatuas-mock'
+import { Estatua } from '@/types'
+import { createClient } from './server'
 
 function supabaseConfigurado(): boolean {
   return !!(
@@ -17,7 +20,6 @@ export async function getEstatua(slug: string): Promise<Estatua | null> {
   }
 
   try {
-    const { createClient } = await import('./server')
     const supabase = await createClient()
     if (!supabase) return ESTATUAS_MOCK.find((e) => e.slug === slug) ?? null
 
@@ -47,7 +49,6 @@ export async function getTodasEstatuas(): Promise<Estatua[]> {
   }
 
   try {
-    const { createClient } = await import('./server')
     const supabase = await createClient()
     if (!supabase) return ESTATUAS_MOCK
 
@@ -67,21 +68,5 @@ export async function getTodasEstatuas(): Promise<Estatua[]> {
   } catch (err) {
     console.error('[getTodasEstatuas] Error al consultar Supabase:', err)
     return ESTATUAS_MOCK
-  }
-}
-
-export async function incrementarVisitas(slug: string): Promise<void> {
-  if (!supabaseConfigurado()) {
-    console.log(`[mock] Visita registrada para: ${slug}`)
-    return
-  }
-
-  try {
-    const response = await fetch(`/api/visitas/${slug}`, { method: 'POST' })
-    if (!response.ok) {
-      console.warn(`[incrementarVisitas] No se pudo registrar visita para ${slug}`)
-    }
-  } catch (err) {
-    console.warn('[incrementarVisitas] Error silencioso:', err)
   }
 }

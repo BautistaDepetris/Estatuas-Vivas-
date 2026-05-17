@@ -4,7 +4,7 @@
 // Se monta en el cliente y llama a la API de visitas en background
 
 import { useEffect } from 'react'
-import { incrementarVisitas } from '@/lib/supabase/queries'
+import { incrementarVisitas } from '@/lib/supabase/client-queries'
 
 export default function VisitaTracker({ slug }: { slug: string }) {
   useEffect(() => {
