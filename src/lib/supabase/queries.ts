@@ -19,6 +19,7 @@ export async function getEstatua(slug: string): Promise<Estatua | null> {
   try {
     const { createClient } = await import('./server')
     const supabase = await createClient()
+    if (!supabase) return ESTATUAS_MOCK.find((e) => e.slug === slug) ?? null
 
     const { data: estatua, error } = await supabase
       .from('estatuas')
@@ -48,6 +49,7 @@ export async function getTodasEstatuas(): Promise<Estatua[]> {
   try {
     const { createClient } = await import('./server')
     const supabase = await createClient()
+    if (!supabase) return ESTATUAS_MOCK
 
     const { data, error } = await supabase
       .from('estatuas')
