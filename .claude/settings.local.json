@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(cd \"C:\\\\Users\\\\bauti\\\\Desktop\\\\estatuas-vivas\"; $job = Start-Job -ScriptBlock { cd \"C:\\\\Users\\\\bauti\\\\Desktop\\\\estatuas-vivas\"; npm run dev 2>&1 }; Start-Sleep -Seconds 15; Invoke-WebRequest -Uri \"http://localhost:3001\" -UseBasicParsing -TimeoutSec 8 | Select-Object StatusCode)"
+    ]
+  }
+}

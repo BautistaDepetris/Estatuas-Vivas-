@@ -1,0 +1,888 @@
+{
+  "project": {
+    "name": "estatuas-vivas",
+    "description": "Sitio mobile-first para recorrer estatuas vivas de Villa San Lorenzo mediante páginas con historia, imágenes, lugares recomendados y audio.",
+    "framework": "Next.js App Router",
+    "language": "TypeScript",
+    "runtime": {
+      "next": "16.2.4",
+      "react": "19.2.4",
+      "tailwindcss": "4.x",
+      "supabase": "@supabase/ssr + @supabase/supabase-js"
+    },
+    "dataMode": "Usa Supabase si existen NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY. Si no, usa datos mock de src/lib/data/estatuas-mock.ts.",
+    "visualConcept": "Sistema editorial oscuro inspirado en museo/Louvre: fondos negros, tipografía serif elegante, acento dorado, cards sobrias, fotografía full-bleed y navegación mobile-first."
+  },
+  "frontendRoutes": [
+    {
+      "route": "/",
+      "file": "src/app/page.tsx",
+      "component": "HomePage",
+      "type": "Server Component",
+      "description": "Home pública. Muestra hero de Villa San Lorenzo, lista de estatuas, galería histórica combinada y lugares combinados.",
+      "dataSources": [
+        "getTodasEstatuas()",
+        "estatuas.flatMap(e => e.imagenes).slice(0, 4)",
+        "estatuas.flatMap(e => e.lugares)"
+      ],
+      "sections": [
+        "Hero full screen con imagen de sierras cordobesas",
+        "Sección 01 Las Estatuas",
+        "Sección 02 Galería Histórica",
+        "Sección 03 Lugares",
+        "Footer Villa San Lorenzo"
+      ]
+    },
+    {
+      "route": "/estatuas/[slug]",
+      "file": "src/app/estatuas/[slug]/page.tsx",
+      "component": "EstatuaPage",
+      "type": "Server Component con componentes cliente",
+      "description": "Detalle público de una estatua. Renderiza portada, capítulos, frase, galería, lugares recomendados, siguiente estatua y audio flotante.",
+      "dynamicParamsFrom": "generateStaticParams() usa ESTATUAS_MOCK.map(e => ({ slug: e.slug }))",
+      "knownStaticSlugs": [
+        "cura-brochero",
+        "san-lorenzo"
+      ],
+      "dataSources": [
+        "getEstatua(slug)",
+        "getSiguienteEstatua(slug)",
+        "ESTATUAS_MOCK para static params"
+      ],
+      "clientChildren": [
+        "src/app/estatuas/[slug]/VisitaTracker.tsx",
+        "src/components/estatua/AudioPlayer.tsx"
+      ],
+      "sections": [
+        "Hero full screen con imagen de portada",
+        "Sección 01 Su Historia: cards horizontales de capítulos",
+        "Sección 02 Frase destacada",
+        "Sección 03 Galería",
+        "Sección 04 El Pueblo Recomienda",
+        "Sección 05 Continuá el recorrido",
+        "AudioPlayer fijo inferior"
+      ],
+      "metadata": {
+        "title": "${estatua.nombre} — Villa San Lorenzo",
+        "description": "estatua.subtitulo",
+        "openGraph": "title, description y primera imagen de la estatua"
+      }
+    },
+    {
+      "route": "/admin",
+      "file": "src/app/admin/page.tsx",
+      "component": "AdminDashboard",
+      "type": "Server Component dentro de AdminLayout",
+      "description": "Dashboard administrativo con métricas de estatuas, imágenes, lugares y visitas totales.",
+      "dataSources": [
+        "getTodasEstatuas()"
+      ],
+      "sections": [
+        "Cards de métricas",
+        "Lista de estatuas registradas"
+      ]
+    },
+    {
+      "route": "/admin/estatuas",
+      "file": "src/app/admin/estatuas/page.tsx",
+      "component": "AdminEstatuasPage",
+      "type": "Server Component dentro de AdminLayout",
+      "description": "Listado administrativo de estatuas con miniatura, subtítulo, cantidad de capítulos, imágenes, visitas y estado.",
+      "dataSources": [
+        "getTodasEstatuas()"
+      ],
+      "uiNotes": [
+        "Incluye botón '+ Nueva estatua' sin persistencia implementada.",
+        "Incluye botón 'Editar' sin acción implementada."
+      ]
+    },
+    {
+      "route": "/admin/galeria",
+      "file": "src/app/admin/galeria/page.tsx",
+      "component": "AdminGaleriaPage",
+      "type": "Client Component dentro de AdminLayout",
+      "description": "Gestión local de galería con estado React. Permite agregar y eliminar fotos solo en memoria del cliente.",
+      "dataSources": [
+        "FOTOS_INICIALES local en el archivo"
+      ],
+      "state": [
+        "fotos",
+        "mostrarFormulario",
+        "form: { url, titulo, descripcion, categoria }"
+      ]
+    },
+    {
+      "route": "/admin/lugares",
+      "file": "src/app/admin/lugares/page.tsx",
+      "component": "AdminLugaresPage",
+      "type": "Client Component dentro de AdminLayout",
+      "description": "Gestión local de lugares del pueblo con estado React. Permite agregar y eliminar lugares solo en memoria del cliente.",
+      "dataSources": [
+        "LUGARES_INICIALES local en el archivo"
+      ],
+      "state": [
+        "lugares",
+        "mostrarFormulario",
+        "form: { nombre, descripcion, categoria, imagen_url }"
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "file": "src/app/layout.tsx",
+      "component": "RootLayout",
+      "description": "Layout raíz. Carga Playfair Display e Inter desde next/font/google, define html lang='es' y aplica fondo #141414 y texto #888888 al body.",
+      "metadata": {
+        "title": "Estatuas Vivas — Villa San Lorenzo",
+        "description": "Descubrí la historia viva de Villa San Lorenzo. Escaneá el QR de cada estatua y conocé su legado."
+      }
+    },
+    {
+      "file": "src/app/admin/layout.tsx",
+      "component": "AdminLayout",
+      "type": "Client Component",
+      "description": "Layout del panel admin con sidebar fijo de 200px, fondo #0d0c0a, enlaces activos usando usePathname.",
+      "navigation": [
+        {
+          "href": "/admin",
+          "label": "Dashboard"
+        },
+        {
+          "href": "/admin/estatuas",
+          "label": "Estatuas"
+        },
+        {
+          "href": "/admin/galeria",
+          "label": "Galería"
+        },
+        {
+          "href": "/admin/lugares",
+          "label": "Lugares"
+        }
+      ]
+    }
+  ],
+  "components": {
+    "src/components/estatua": [
+      {
+        "file": "AudioPlayer.tsx",
+        "component": "AudioPlayer",
+        "type": "Client Component",
+        "usedBy": [
+          "src/app/estatuas/[slug]/page.tsx"
+        ],
+        "props": {
+          "audioUrl": "string | null",
+          "nombreEstatua": "string"
+        },
+        "description": "Player flotante fijo abajo. Si no hay audio muestra 'Audio próximamente'. Si hay audio controla play/pause, progreso, seek, duración y estado de carga usando HTMLAudioElement.",
+        "state": [
+          "reproduciendo",
+          "progreso",
+          "tiempoActual",
+          "duracion",
+          "cargando"
+        ]
+      },
+      {
+        "file": "HeroSection.tsx",
+        "component": "HeroSection",
+        "type": "Server Component",
+        "usedBy": [],
+        "props": {
+          "estatua": "Estatua"
+        },
+        "description": "Hero alternativo/legacy con next/image, gradiente negro, título, subtítulo, frase y scroll indicator. Actualmente no está importado por la página dinámica."
+      },
+      {
+        "file": "ImageGallery.tsx",
+        "component": "ImageGallery",
+        "type": "Client Component",
+        "usedBy": [],
+        "props": {
+          "imagenes": "EstatuaImagen[]",
+          "nombreEstatua": "string"
+        },
+        "description": "Galería horizontal con modal/lightbox al hacer click. Muestra hasta 6 imágenes. Actualmente no está importada por la página dinámica."
+      },
+      {
+        "file": "NextStatuaButton.tsx",
+        "component": "NextStatuaButton",
+        "type": "Server Component",
+        "usedBy": [],
+        "props": {
+          "siguiente": "Estatua"
+        },
+        "description": "Botón/card para navegar a la siguiente estatua con mini preview. Actualmente no está importado por la página dinámica, que implementa esta sección inline."
+      },
+      {
+        "file": "QuoteCard.tsx",
+        "component": "QuoteCard",
+        "type": "Server Component",
+        "usedBy": [],
+        "props": {
+          "frase": "string",
+          "autor": "string"
+        },
+        "description": "Card decorativa para frase destacada con gradiente ámbar/stone. Actualmente no está importada por la página dinámica."
+      }
+    ],
+    "src/components/ui": [
+      {
+        "file": "LoadingSpinner.tsx",
+        "component": "LoadingSpinner",
+        "type": "Server/Client compatible",
+        "usedBy": [],
+        "props": {
+          "texto": "string = 'Cargando...'"
+        },
+        "description": "Spinner reutilizable con clases Tailwind ámbar. No aparece importado en las páginas actuales."
+      }
+    ],
+    "src/app/estatuas/[slug]": [
+      {
+        "file": "VisitaTracker.tsx",
+        "component": "VisitaTracker",
+        "type": "Client Component",
+        "usedBy": [
+          "src/app/estatuas/[slug]/page.tsx"
+        ],
+        "props": {
+          "slug": "string"
+        },
+        "description": "Componente invisible que llama incrementarVisitas(slug) en useEffect."
+      }
+    ]
+  },
+  "types": {
+    "sourceFile": "src/types/index.ts",
+    "interfaces": {
+      "Capitulo": {
+        "titulo": "string",
+        "texto": "string"
+      },
+      "EstatuaImagen": {
+        "url": "string",
+        "titulo": "string",
+        "descripcion": "string",
+        "categoria": "string"
+      },
+      "Lugar": {
+        "nombre": "string",
+        "descripcion": "string",
+        "categoria": "string"
+      },
+      "Estatua": {
+        "id": "string",
+        "slug": "string",
+        "nombre": "string",
+        "subtitulo": "string",
+        "capitulos": "Capitulo[]",
+        "frase": "string",
+        "imagenes": "EstatuaImagen[]",
+        "audio_url": "string | null",
+        "lugares": "Lugar[]",
+        "activa": "boolean",
+        "orden": "number",
+        "visitas": "number",
+        "created_at": "string"
+      }
+    }
+  },
+  "mockData": {
+    "sourceFile": "src/lib/data/estatuas-mock.ts",
+    "note": "Los textos están normalizados aquí para que otra IA los entienda. En algunos archivos fuente actuales se observan caracteres mojibake por encoding.",
+    "estatuas": [
+      {
+        "id": "1",
+        "slug": "cura-brochero",
+        "nombre": "Cura Brochero",
+        "subtitulo": "Santo de los Caminos · 1840–1914",
+        "frase": "La religión no se predica, se vive.",
+        "audio_url": null,
+        "activa": true,
+        "orden": 1,
+        "visitas": 214,
+        "created_at": "new Date().toISOString()",
+        "capitulos": [
+          {
+            "titulo": "Sus Orígenes",
+            "texto": "José Gabriel Brochero nació el 16 de marzo de 1840 en Santa Rosa de Río Primero, Córdoba. Desde joven sintió el llamado del sacerdocio con una claridad que contrastaba con la comodidad que su familia podría haberle ofrecido. Eligió la sotana sobre el arado, y la sierra sobre la ciudad. Su vocación no fue un escape del mundo, sino un modo de entrar de lleno en él."
+          },
+          {
+            "titulo": "Los Caminos de las Sierras",
+            "texto": "A lomo de mula, Brochero recorrió durante décadas los laberintos de las sierras cordobesas. Construyó capillas donde no había refugio, acequias donde no había agua, y escuelas donde no había futuro. Cada kilómetro a caballo era una parroquia ganada. Cada piedra colocada era una promesa cumplida. Nadie conocía mejor que él los caminos polvorientos del noroeste cordobés."
+          },
+          {
+            "titulo": "El Hombre del Pueblo",
+            "texto": "Brochero no hablaba desde el púlpito hacia abajo: hablaba de igual a igual, con el vocabulario del trabajador y la franqueza del amigo. Cuando la lepra empezó a diezmar a su gente, no huyó. Se quedó. Contrajo la enfermedad él mismo, quedó ciego, pero siguió recibiendo visitas y escuchando confesiones hasta que las manos no le respondieron más. Su carácter directo y sin rodeos era parte de su santidad."
+          },
+          {
+            "titulo": "Su Legado",
+            "texto": "El 16 de octubre de 2016, el Papa Francisco —él mismo cordobés de origen— canonizó a José Gabriel Brochero en la Plaza de San Pedro. Se convirtió en el primer santo argentino nacido en suelo nacional. Su estatua en Villa San Lorenzo es hoy un punto de peregrinación silenciosa. Los que pasan frente a ella suelen detenerse. Algo en ese bronce tiene la paciencia de quien cruzó sierras sin apuro."
+          }
+        ],
+        "imagenes": [
+          {
+            "url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+            "titulo": "Sierras al Atardecer",
+            "descripcion": "Las sierras cordobesas que Brochero recorrió a lomo de mula durante décadas.",
+            "categoria": "Paisaje"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+            "titulo": "Caminos de Altura",
+            "descripcion": "Los senderos de montaña por donde el cura llevaba la fe a los más aislados.",
+            "categoria": "Naturaleza"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80",
+            "titulo": "Cielo Cordobés",
+            "descripcion": "El cielo abierto de Córdoba, testigo silencioso de sus travesías.",
+            "categoria": "Paisaje"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=800&q=80",
+            "titulo": "Sendero de las Sierras",
+            "descripcion": "Un camino rural como los que Brochero transitó para llegar a cada familia.",
+            "categoria": "Patrimonio"
+          }
+        ],
+        "lugares": [
+          {
+            "nombre": "Capilla Brochero",
+            "descripcion": "El recinto donde ofició sus últimas misas. Patrimonio histórico provincial desde 1983.",
+            "categoria": "Patrimonio Religioso"
+          },
+          {
+            "nombre": "Sendero de las Sierras",
+            "descripcion": "El camino que Brochero recorrió innumerables veces. Hoy abierto al turismo espiritual.",
+            "categoria": "Naturaleza"
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "slug": "san-lorenzo",
+        "nombre": "San Lorenzo",
+        "subtitulo": "Patrono del Pueblo · Mártir Romano",
+        "frase": "Dame la gracia de saber sufrir.",
+        "audio_url": null,
+        "activa": true,
+        "orden": 2,
+        "visitas": 178,
+        "created_at": "new Date().toISOString()",
+        "capitulos": [
+          {
+            "titulo": "El Imperio Romano",
+            "texto": "El siglo III fue uno de los más convulsionados de Roma. El Imperio se desangraba en guerras civiles y la religión cristiana era perseguida con intermitencias crueles. El emperador Valeriano decretó en el año 257 la persecución sistemática del clero. En ese contexto de miedo y resistencia nació la historia de Lorenzo, diácono de la Iglesia romana y custodio de sus bienes."
+          },
+          {
+            "titulo": "El Diácono Valiente",
+            "texto": "Lorenzo era el encargado de administrar los tesoros de la Iglesia y de distribuirlos entre los pobres. Cuando Valeriano ordenó la entrega de las riquezas eclesiásticas, Lorenzo se presentó ante el prefecto rodeado de mendigos, enfermos y marginados, y declaró: \"Estos son los tesoros de la Iglesia.\" Su arresto fue inmediato. Su valentía, definitiva."
+          },
+          {
+            "titulo": "El Martirio",
+            "texto": "El 10 de agosto del año 258, Lorenzo fue condenado a morir sobre una parrilla de hierro al rojo vivo. Según la tradición, en mitad del suplicio pronunció con serenidad asombrosa: \"Dáme vuelta, que de este lado ya estoy asado.\" Esa frase, mezcla de fortaleza y humor estoico, se convirtió en parte del relato de su martirio. Murió con una paz que sus verdugos no supieron comprender."
+          },
+          {
+            "titulo": "Su Nombre en el Pueblo",
+            "texto": "Villa San Lorenzo tomó su nombre de este mártir romano cuando los primeros pobladores eligieron a un patrono para la naciente comunidad. La devoción a San Lorenzo no era solo religiosa: era también un acto de identidad. Su nombre quedó grabado en la plaza central, en la iglesia, y finalmente en la estatua que hoy recibe a quienes visitan el pueblo y se detienen a escuchar su historia."
+          }
+        ],
+        "imagenes": [
+          {
+            "url": "https://images.unsplash.com/photo-1548017787-4c8789c9e59a?w=800&q=80",
+            "titulo": "Arquitectura Colonial",
+            "descripcion": "La arquitectura colonial que acompaña la historia del pueblo desde su fundación.",
+            "categoria": "Patrimonio"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80",
+            "titulo": "Cielo Dramático",
+            "descripcion": "Los cielos abiertos de la región, herederos de la misma eternidad que San Lorenzo contempló.",
+            "categoria": "Paisaje"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1555992336-03a23c7b20ee?w=800&q=80",
+            "titulo": "Luz de Velas",
+            "descripcion": "La luz votiva que acompaña la devoción popular al mártir romano.",
+            "categoria": "Devoción"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=80",
+            "titulo": "Piedra Antigua",
+            "descripcion": "La piedra trabajada evoca la Roma del siglo III donde Lorenzo eligió su destino.",
+            "categoria": "Historia"
+          }
+        ],
+        "lugares": [
+          {
+            "nombre": "Iglesia San Lorenzo",
+            "descripcion": "El edificio histórico del pueblo, epicentro de la devoción al mártir romano desde 1887.",
+            "categoria": "Patrimonio Religioso"
+          },
+          {
+            "nombre": "Plaza Central",
+            "descripcion": "El corazón cívico de Villa San Lorenzo desde su fundación. Lugar de encuentro y memoria.",
+            "categoria": "Espacio Público"
+          }
+        ]
+      }
+    ],
+    "adminGaleriaFotosIniciales": [
+      {
+        "id": "1",
+        "url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&q=80",
+        "titulo": "Sierras al Atardecer",
+        "descripcion": "Las sierras cordobesas en hora dorada.",
+        "categoria": "Paisaje"
+      },
+      {
+        "id": "2",
+        "url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80",
+        "titulo": "Caminos de Altura",
+        "descripcion": "Senderos por las sierras.",
+        "categoria": "Naturaleza"
+      },
+      {
+        "id": "3",
+        "url": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400&q=80",
+        "titulo": "Cielo Dramático",
+        "descripcion": "El cielo abierto de la región.",
+        "categoria": "Paisaje"
+      },
+      {
+        "id": "4",
+        "url": "https://images.unsplash.com/photo-1548017787-4c8789c9e59a?w=400&q=80",
+        "titulo": "Arquitectura Colonial",
+        "descripcion": "Patrimonio histórico del pueblo.",
+        "categoria": "Patrimonio"
+      }
+    ],
+    "adminLugaresIniciales": [
+      {
+        "id": "1",
+        "nombre": "Capilla Brochero",
+        "descripcion": "El recinto donde ofició sus últimas misas. Patrimonio histórico provincial desde 1983.",
+        "categoria": "Patrimonio Religioso",
+        "imagen_url": "https://picsum.photos/seed/capilla/128/128"
+      },
+      {
+        "id": "2",
+        "nombre": "Iglesia San Lorenzo",
+        "descripcion": "El edificio histórico del pueblo, epicentro de la devoción al mártir romano desde 1887.",
+        "categoria": "Patrimonio Religioso",
+        "imagen_url": "https://picsum.photos/seed/iglesia/128/128"
+      },
+      {
+        "id": "3",
+        "nombre": "Plaza Central",
+        "descripcion": "El corazón cívico de Villa San Lorenzo desde su fundación. Lugar de encuentro y memoria.",
+        "categoria": "Espacio Público",
+        "imagen_url": "https://picsum.photos/seed/plaza/128/128"
+      },
+      {
+        "id": "4",
+        "nombre": "Sendero de las Sierras",
+        "descripcion": "El camino que Brochero recorrió innumerables veces. Hoy abierto al turismo espiritual.",
+        "categoria": "Naturaleza",
+        "imagen_url": "https://picsum.photos/seed/sendero/128/128"
+      }
+    ]
+  },
+  "supabase": {
+    "schemaFile": "supabase/schema.sql",
+    "environmentVariables": [
+      "NEXT_PUBLIC_SUPABASE_URL",
+      "NEXT_PUBLIC_SUPABASE_ANON_KEY"
+    ],
+    "clientFiles": [
+      {
+        "file": "src/lib/supabase/server.ts",
+        "description": "createServerClient con cookies de Next para Server Components."
+      },
+      {
+        "file": "src/lib/supabase/client.ts",
+        "description": "createBrowserClient para Client Components."
+      },
+      {
+        "file": "src/lib/supabase/queries.ts",
+        "description": "Consultas getEstatua, getTodasEstatuas e incrementarVisitas con fallback a ESTATUAS_MOCK."
+      }
+    ],
+    "queries": {
+      "getEstatua": {
+        "table": "estatuas",
+        "select": "*, capitulos(*), imagenes:estatua_imagenes(*), lugares(*)",
+        "filters": [
+          "slug = slug",
+          "activa = true"
+        ],
+        "fallback": "ESTATUAS_MOCK.find(e => e.slug === slug) ?? null"
+      },
+      "getTodasEstatuas": {
+        "table": "estatuas",
+        "select": "*, capitulos(*), imagenes:estatua_imagenes(*), lugares(*)",
+        "filters": [
+          "activa = true"
+        ],
+        "order": "orden ascending",
+        "fallback": "ESTATUAS_MOCK"
+      },
+      "incrementarVisitas": {
+        "behavior": "Si Supabase no está configurado loguea mock. Si está configurado llama fetch('/api/visitas/${slug}', { method: 'POST' }).",
+        "note": "No existe una ruta src/app/api/visitas/[slug] en la estructura actual detectada."
+      }
+    },
+    "tables": {
+      "estatuas": {
+        "fields": {
+          "id": "uuid primary key default gen_random_uuid()",
+          "slug": "text unique not null",
+          "nombre": "text not null",
+          "subtitulo": "text",
+          "frase": "text",
+          "audio_url": "text",
+          "activa": "boolean default true",
+          "orden": "int default 0",
+          "visitas": "int default 0",
+          "created_at": "timestamptz default now()",
+          "updated_at": "timestamptz default now()"
+        },
+        "rls": true,
+        "policies": [
+          {
+            "name": "Lectura publica",
+            "operation": "select",
+            "using": "activa = true"
+          }
+        ],
+        "indexes": [
+          "estatuas(activa, orden)"
+        ]
+      },
+      "capitulos": {
+        "fields": {
+          "id": "uuid primary key default gen_random_uuid()",
+          "estatua_id": "uuid references estatuas(id) on delete cascade",
+          "titulo": "text not null",
+          "texto": "text not null",
+          "orden": "int default 0"
+        },
+        "rls": true,
+        "policies": [
+          {
+            "name": "Lectura publica",
+            "operation": "select",
+            "using": "true"
+          }
+        ],
+        "indexes": [
+          "capitulos(estatua_id, orden)"
+        ]
+      },
+      "estatua_imagenes": {
+        "fields": {
+          "id": "uuid primary key default gen_random_uuid()",
+          "estatua_id": "uuid references estatuas(id) on delete cascade",
+          "url": "text not null",
+          "titulo": "text",
+          "descripcion": "text",
+          "categoria": "text",
+          "orden": "int default 0"
+        },
+        "rls": true,
+        "policies": [
+          {
+            "name": "Lectura publica",
+            "operation": "select",
+            "using": "true"
+          }
+        ],
+        "indexes": [
+          "estatua_imagenes(estatua_id, orden)"
+        ]
+      },
+      "lugares": {
+        "fields": {
+          "id": "uuid primary key default gen_random_uuid()",
+          "estatua_id": "uuid references estatuas(id) on delete cascade",
+          "nombre": "text not null",
+          "descripcion": "text",
+          "categoria": "text",
+          "orden": "int default 0"
+        },
+        "rls": true,
+        "policies": [
+          {
+            "name": "Lectura publica",
+            "operation": "select",
+            "using": "true"
+          }
+        ],
+        "indexes": [
+          "lugares(estatua_id, orden)"
+        ]
+      },
+      "galeria": {
+        "fields": {
+          "id": "uuid primary key default gen_random_uuid()",
+          "url": "text not null",
+          "titulo": "text",
+          "descripcion": "text",
+          "categoria": "text",
+          "orden": "int default 0",
+          "created_at": "timestamptz default now()"
+        },
+        "rls": true,
+        "policies": [
+          {
+            "name": "Lectura publica",
+            "operation": "select",
+            "using": "true"
+          }
+        ]
+      },
+      "lugares_pueblo": {
+        "fields": {
+          "id": "uuid primary key default gen_random_uuid()",
+          "nombre": "text not null",
+          "descripcion": "text",
+          "categoria": "text",
+          "imagen_url": "text",
+          "orden": "int default 0"
+        },
+        "rls": true,
+        "policies": [
+          {
+            "name": "Lectura publica",
+            "operation": "select",
+            "using": "true"
+          }
+        ]
+      }
+    }
+  },
+  "designSystem": {
+    "sourceFiles": [
+      "src/app/globals.css",
+      "src/app/layout.tsx",
+      "inline styles across src/app/**/*.tsx and src/components/**/*.tsx"
+    ],
+    "palette": {
+      "primaryBackground": {
+        "name": "oscuro",
+        "hex": "#141414",
+        "usage": "Fondo global, páginas públicas, placeholders oscuros."
+      },
+      "surface": {
+        "name": "oscuro2",
+        "hex": "#1a1a1a",
+        "usage": "Cards, paneles, secciones admin."
+      },
+      "surfaceDeep": {
+        "name": "oscuro3",
+        "hex": "#111111",
+        "usage": "Bandas alternas como galería y frase destacada."
+      },
+      "adminSidebarAudio": {
+        "hex": "#0d0c0a",
+        "usage": "Sidebar admin y AudioPlayer."
+      },
+      "border": {
+        "name": "borde",
+        "hex": "#2a2a2a",
+        "usage": "Bordes finos de cards, listas e inputs."
+      },
+      "gold": {
+        "name": "dorado",
+        "hex": "#C9A84C",
+        "usage": "Acento principal: líneas editoriales, números, botones, links y controles."
+      },
+      "textPrimary": {
+        "hex": "#ffffff",
+        "usage": "Títulos principales y texto sobre imágenes."
+      },
+      "textBody": {
+        "hex": "#888888",
+        "usage": "Color base del body."
+      },
+      "textMuted": {
+        "hexes": [
+          "#777",
+          "#666",
+          "#555",
+          "#444"
+        ],
+        "usage": "Subtítulos, descripciones, metadata y textos secundarios."
+      },
+      "success": {
+        "hex": "#4a8",
+        "usage": "Estado Activa en admin."
+      },
+      "legacyTailwindAmber": {
+        "values": [
+          "amber-400",
+          "amber-500",
+          "amber-800/30",
+          "amber-950",
+          "amber-50",
+          "amber-200"
+        ],
+        "usage": "Componentes legacy o no usados actualmente como HeroSection, QuoteCard, LoadingSpinner y NextStatuaButton."
+      },
+      "legacyTailwindZincStone": {
+        "values": [
+          "zinc-400",
+          "zinc-500",
+          "zinc-800",
+          "zinc-900",
+          "stone-900"
+        ],
+        "usage": "Componentes legacy o no usados actualmente."
+      }
+    },
+    "typography": {
+      "fontsFromNextFont": [
+        {
+          "name": "Playfair Display",
+          "variable": "--font-playfair",
+          "weights": [
+            "400",
+            "700"
+          ],
+          "usage": "Títulos editoriales, nombres de estatuas, números de sección, marca."
+        },
+        {
+          "name": "Inter",
+          "variable": "--font-inter",
+          "weights": [
+            "300",
+            "400"
+          ],
+          "usage": "Texto base, etiquetas, navegación, formularios y metadata."
+        }
+      ],
+      "themeAliases": {
+        "--font-serif": "var(--font-playfair), 'Playfair Display', serif",
+        "--font-sans": "var(--font-inter), 'Inter', sans-serif"
+      },
+      "patterns": [
+        "Editorial labels: 8px, uppercase, letter-spacing 3px, color #C9A84C, border-top 0.5px solid #C9A84C.",
+        "Hero H1 público: Playfair Display, clamp(48px, 12vw, 72px), peso 700, color #ffffff.",
+        "Hero H1 detalle: Playfair Display, clamp(44px, 13vw, 64px), peso 700, color #ffffff.",
+        "Admin títulos: Playfair Display, 24px, color #ffffff.",
+        "Textos secundarios suelen usar 8px a 11px, uppercase y letter-spacing entre 1px y 3px."
+      ]
+    },
+    "tailwindCustomVariables": {
+      "source": "src/app/globals.css @theme",
+      "variables": {
+        "--color-dorado": "#C9A84C",
+        "--color-oscuro": "#141414",
+        "--color-oscuro2": "#1a1a1a",
+        "--color-oscuro3": "#111111",
+        "--color-borde": "#2a2a2a",
+        "--font-serif": "var(--font-playfair), 'Playfair Display', serif",
+        "--font-sans": "var(--font-inter), 'Inter', sans-serif"
+      }
+    },
+    "globalCssUtilities": {
+      "scrollbar-none": "Oculta scrollbars con -ms-overflow-style, scrollbar-width y ::-webkit-scrollbar.",
+      "editorial-label": "Etiqueta editorial dorada uppercase con línea superior.",
+      "section-header": "Flex row con gap 12px y margin-bottom 24px.",
+      "animate-fade-in": "Animación fade-in 0.8s ease-out both.",
+      "linea-dorada": "Bloque horizontal de 0.5px en #C9A84C.",
+      "linea-oscura": "Bloque horizontal de 0.5px en #2a2a2a."
+    }
+  },
+  "assetsAndImages": {
+    "publicFiles": [
+      "public/window.svg",
+      "public/vercel.svg",
+      "public/next.svg",
+      "public/globe.svg",
+      "public/file.svg"
+    ],
+    "externalImageHostsConfigured": [
+      "picsum.photos",
+      "*.supabase.co",
+      "images.unsplash.com"
+    ],
+    "externalImagesUsed": [
+      "Unsplash para hero y galerías mock",
+      "Picsum para placeholders de lugares, estatuas y previews"
+    ],
+    "nextConfig": "next.config.ts define remotePatterns para picsum.photos, *.supabase.co e images.unsplash.com."
+  },
+  "behaviorNotesForAnotherAI": [
+    "La app actual prioriza estilos inline en páginas principales; Tailwind aparece sobre todo en componentes legacy/no usados y utilities globales.",
+    "El diseño público está fuertemente orientado a mobile: heights de 100vh, paddings pequeños, cards horizontales con overflow-x y botones compactos.",
+    "No hay autenticación admin implementada. Las páginas /admin son accesibles como rutas normales.",
+    "Las pantallas admin de galería y lugares solo modifican estado local; no persisten en Supabase.",
+    "incrementarVisitas intenta llamar /api/visitas/[slug], pero no se detectó esa ruta en la estructura actual.",
+    "El archivo src/lib/data/estatuas-mock.ts exporta getSiguienteEstatua(slugActual), que calcula el siguiente elemento de forma circular.",
+    "La consulta Supabase usa alias imagenes:estatua_imagenes(*) para cumplir con el tipo Estatua.imagenes.",
+    "La home combina imágenes y lugares desde todas las estatuas, no desde las tablas galeria o lugares_pueblo.",
+    "La tabla galeria y lugares_pueblo existen en el schema, pero las rutas públicas actuales no las consultan."
+  ],
+  "fileTree": {
+    "root": [
+      ".env.local",
+      ".gitignore",
+      "eslint.config.mjs",
+      "next-env.d.ts",
+      "next.config.ts",
+      "package-lock.json",
+      "package.json",
+      "postcss.config.mjs",
+      "README.md",
+      "tsconfig.json",
+      "tsconfig.tsbuildinfo",
+      "project-context.json"
+    ],
+    "src": {
+      "app": [
+        "favicon.ico",
+        "globals.css",
+        "layout.tsx",
+        "page.tsx",
+        "admin/layout.tsx",
+        "admin/page.tsx",
+        "admin/estatuas/page.tsx",
+        "admin/galeria/page.tsx",
+        "admin/lugares/page.tsx",
+        "estatuas/[slug]/page.tsx",
+        "estatuas/[slug]/VisitaTracker.tsx"
+      ],
+      "components": [
+        "components/ui/LoadingSpinner.tsx",
+        "components/estatua/AudioPlayer.tsx",
+        "components/estatua/HeroSection.tsx",
+        "components/estatua/ImageGallery.tsx",
+        "components/estatua/NextStatuaButton.tsx",
+        "components/estatua/QuoteCard.tsx"
+      ],
+      "lib": [
+        "lib/data/estatuas-mock.ts",
+        "lib/supabase/client.ts",
+        "lib/supabase/queries.ts",
+        "lib/supabase/server.ts"
+      ],
+      "types": [
+        "types/index.ts"
+      ]
+    },
+    "supabase": [
+      "schema.sql"
+    ],
+    "public": [
+      "file.svg",
+      "globe.svg",
+      "next.svg",
+      "vercel.svg",
+      "window.svg"
+    ]
+  }
+}

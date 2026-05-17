@@ -1,0 +1,243 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #F5EDD8;
+  --color-bg-2: #EDE0C4;
+  --color-bg-3: #E8D9B8;
+  --color-paper: #FAF4E2;
+  --color-rojo: #8B2020;
+  --color-rojo-dark: #6B1818;
+  --color-rojo-light: #B14040;
+  --color-ink: #1C1008;
+  --color-ink-2: #3D2A14;
+  --color-brown: #6B4C2A;
+  --color-brown-soft: #8C6B42;
+  --color-border: #C4A882;
+  --font-serif: var(--font-playfair), 'Playfair Display', Georgia, serif;
+  --font-sans: var(--font-inter), 'Inter', system-ui, sans-serif;
+}
+
+:root {
+  --bg: #F5EDD8;
+  --bg-2: #EDE0C4;
+  --bg-3: #E8D9B8;
+  --paper: #FAF4E2;
+  --red: #8B2020;
+  --red-dark: #6B1818;
+  --red-light: #B14040;
+  --ink: #1C1008;
+  --ink-2: #3D2A14;
+  --ink-3: #6B4C2A;
+  --ink-4: #8C6B42;
+  --brown: #6B4C2A;
+  --brown-soft: #8C6B42;
+  --border: #C4A882;
+  --border-dark: #8C6B42;
+  --font-display: var(--font-playfair), 'Playfair Display', Georgia, serif;
+  --font-body: var(--font-inter), 'Inter', system-ui, sans-serif;
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  border-radius: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+.paper-bg {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(rgba(108, 76, 42, 0.04) 1px, transparent 1.5px),
+    radial-gradient(rgba(28, 16, 8, 0.025) 1px, transparent 1px);
+  background-position: 0 0, 3px 3px;
+  background-size: 6px 6px, 11px 11px;
+}
+
+.display-italic {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.92;
+}
+
+.editorial-lbl {
+  color: var(--brown);
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.editorial-num {
+  color: var(--red);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.btn-red,
+.btn-outline-red,
+.btn-ghost {
+  align-items: center;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  gap: 10px;
+  letter-spacing: 0.22em;
+  padding: 12px 20px;
+  text-transform: uppercase;
+  transition: background 150ms var(--ease-out), border-color 150ms var(--ease-out), color 150ms var(--ease-out);
+}
+
+.btn-red {
+  background: var(--red);
+  border: 0;
+  color: var(--paper);
+}
+
+.btn-red:hover {
+  background: var(--red-dark);
+}
+
+.btn-outline-red {
+  background: transparent;
+  border: 0.5px solid var(--red);
+  color: var(--red);
+}
+
+.btn-outline-red:hover {
+  background: var(--red);
+  color: var(--paper);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 0.5px solid var(--border);
+  color: var(--brown);
+}
+
+.btn-ghost:hover {
+  border-color: var(--brown);
+  color: var(--ink);
+}
+
+.input {
+  background: var(--paper);
+  border: 0.5px solid var(--border);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  padding: 12px 14px;
+  width: 100%;
+}
+
+.input:focus {
+  border-color: var(--red);
+}
+
+.input::placeholder {
+  color: var(--ink-4);
+  font-style: italic;
+}
+
+.frame {
+  background: linear-gradient(135deg, #d9bf8a 0%, #b89c64 60%, #8c6b42 100%);
+  border: 0.5px solid #6b4c2a;
+  box-shadow: 0 1px 2px rgba(60, 40, 20, 0.25), inset 0 0 0 1px rgba(255, 240, 200, 0.35);
+  padding: 5px;
+}
+
+.hr-brown,
+.hr-red {
+  border: 0;
+  height: 0.5px;
+}
+
+.hr-brown {
+  background: var(--border);
+}
+
+.hr-red {
+  background: var(--red);
+}
+
+.scroll-x,
+.scrollbar-none {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.scroll-x::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.museum-image {
+  filter: saturate(0.82) sepia(0.18) contrast(0.94);
+}
