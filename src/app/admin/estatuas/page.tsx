@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import FramedPainting from '@/components/estatua/FramedPainting'
 import { getTodasEstatuas } from '@/lib/supabase/queries'
 
@@ -10,7 +11,7 @@ export default async function AdminEstatuasPage() {
         <div>
           <p className="editorial-lbl" style={{ alignItems: 'center', display: 'inline-flex', gap: '10px', marginBottom: '14px' }}>
             <span style={{ background: 'var(--red)', height: '0.5px', width: '24px' }} />
-            Catalogo
+            Catálogo
           </p>
           <h1 style={{ fontSize: '36px' }}>Estatuas.</h1>
         </div>
@@ -37,10 +38,12 @@ export default async function AdminEstatuasPage() {
               <h2 style={{ color: 'var(--red)', fontSize: '28px', marginBottom: '8px' }}>{estatua.nombre}</h2>
               <p style={{ color: 'var(--ink-3)', fontSize: '11px', lineHeight: 1.6 }}>{estatua.subtitulo}</p>
               <p className="editorial-lbl" style={{ color: 'var(--ink-4)', fontSize: '8px', marginTop: '12px' }}>
-                {estatua.capitulos.length} capitulos · {estatua.imagenes.length} imagenes · {estatua.visitas} visitas
+                {estatua.capitulos.length} capítulos · {estatua.imagenes.length} imágenes · {estatua.visitas} visitas
               </p>
             </div>
-            <button className="btn-ghost">Editar</button>
+            <Link className="btn-ghost" href={`/admin/estatuas/${estatua.slug}`}>
+              Editar
+            </Link>
           </article>
         ))}
       </div>

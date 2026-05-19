@@ -6,8 +6,7 @@ import { usePathname } from 'next/navigation'
 const enlaces = [
   { href: '/admin', label: 'Dashboard', count: '' },
   { href: '/admin/estatuas', label: 'Estatuas', count: '02' },
-  { href: '/admin/galeria', label: 'Galeria', count: '42' },
-  { href: '/admin/lugares', label: 'Lugares', count: '04' },
+  { href: '/admin/pagina-principal', label: 'Página Principal', count: '' },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -46,7 +45,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
         <nav style={{ display: 'flex', flexDirection: 'column' }}>
           {enlaces.map((enlace) => {
-            const activo = pathname === enlace.href
+            const activo = enlace.href === '/admin'
+              ? pathname === enlace.href
+              : pathname === enlace.href || pathname.startsWith(`${enlace.href}/`)
+
             return (
               <Link
                 key={enlace.href}
@@ -60,6 +62,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   fontWeight: 500,
                   justifyContent: 'space-between',
                   letterSpacing: '0.28em',
+                  lineHeight: 1.4,
                   padding: '14px 26px',
                   textTransform: 'uppercase',
                 }}
@@ -85,7 +88,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             textTransform: 'uppercase',
           }}
         >
-          Sesion · 8:21
+          Sesión · 8:21
           <br />
           <span style={{ color: 'var(--ink-3)' }}>Marina Tula</span>
         </div>
