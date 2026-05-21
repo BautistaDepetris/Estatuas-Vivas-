@@ -1,17 +1,19 @@
 import Link from 'next/link'
-import { getTodasEstatuas } from '@/lib/supabase/queries'
+import { getGaleriaPublica, getLugaresPueblo, getTodasEstatuas } from '@/lib/supabase/queries'
 import Butterfly from '@/components/estatua/Butterfly'
 import EditorialNum from '@/components/estatua/EditorialNum'
 import EstatuaCard from '@/components/estatua/EstatuaCard'
 import FramedPainting from '@/components/estatua/FramedPainting'
 import LugarRow from '@/components/estatua/LugarRow'
 
+export const dynamic = 'force-dynamic'
+
 export default async function HomePage() {
-  const estatuas = await getTodasEstatuas()
-  const imagenesGaleria = estatuas.flatMap((e) => e.imagenes).slice(0, 8)
-  const lugaresCombinados = estatuas
-    .flatMap((e) => e.lugares.map((l) => ({ ...l, estatuaNombre: e.nombre })))
-    .slice(0, 6)
+  const [estatuas, imagenesGaleria, lugaresCombinados] = await Promise.all([
+    getTodasEstatuas(),
+    getGaleriaPublica(),
+    getLugaresPueblo(),
+  ])
 
   return (
     <main className="paper-bg" style={{ background: 'var(--bg)', color: 'var(--ink)', minHeight: '100vh' }}>

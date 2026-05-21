@@ -2,6 +2,8 @@ import Link from 'next/link'
 import FramedPainting from '@/components/estatua/FramedPainting'
 import { getTodasEstatuas } from '@/lib/supabase/queries'
 
+export const dynamic = 'force-dynamic'
+
 export default async function AdminEstatuasPage() {
   const estatuas = await getTodasEstatuas()
 

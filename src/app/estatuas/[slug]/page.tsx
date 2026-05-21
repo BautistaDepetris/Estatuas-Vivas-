@@ -23,6 +23,8 @@ const audioTracks = [
   'Los fundadores',
 ]
 
+export const dynamic = 'force-dynamic'
+
 export async function generateStaticParams() {
   return ESTATUAS_MOCK.map((e) => ({ slug: e.slug }))
 }

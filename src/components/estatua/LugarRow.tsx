@@ -24,6 +24,7 @@ export default function LugarRow({ lugar, index, href = '/lugares', last = false
     >
       <div style={{ flexShrink: 0 }}>
         <FramedPainting
+          src={lugar.imagen_url}
           alt={lugar.nombre}
           width={62}
           height={62}

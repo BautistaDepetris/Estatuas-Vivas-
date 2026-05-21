@@ -16,6 +16,7 @@ export interface Lugar {
   nombre: string
   descripcion: string
   categoria: string
+  imagen_url?: string | null
 }
 
 export interface Estatua {

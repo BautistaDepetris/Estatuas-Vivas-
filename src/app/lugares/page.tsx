@@ -4,6 +4,8 @@ import EditorialNum from '@/components/estatua/EditorialNum'
 import FramedPainting from '@/components/estatua/FramedPainting'
 import { getTodasEstatuas } from '@/lib/supabase/queries'
 
+export const dynamic = 'force-dynamic'
+
 export default async function LugaresPage() {
   const estatuas = await getTodasEstatuas()
   const lugares = estatuas.flatMap((estatua) => estatua.lugares)
