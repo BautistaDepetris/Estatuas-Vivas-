@@ -6,6 +6,7 @@ import 'server-only'
 import { ESTATUAS_MOCK } from '@/lib/data/estatuas-mock'
 import { Estatua, EstatuaImagen, Lugar } from '@/types'
 import { createClient } from './server'
+import { getSupabaseConfig } from './url'
 
 export interface GaleriaItem extends EstatuaImagen {
   id: string
@@ -25,10 +26,7 @@ export interface AdminDashboardData {
 }
 
 function supabaseConfigurado(): boolean {
-  return !!(
-    process.env.NEXT_PUBLIC_SUPABASE_URL &&
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  )
+  return !!getSupabaseConfig()
 }
 
 export async function getEstatua(slug: string): Promise<Estatua | null> {

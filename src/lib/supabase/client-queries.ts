@@ -3,11 +3,10 @@
 // Funciones seguras para Client Components.
 // No importan server.ts, queries.ts ni next/headers.
 
+import { getSupabaseConfig } from './url'
+
 function supabaseConfigurado(): boolean {
-  return !!(
-    process.env.NEXT_PUBLIC_SUPABASE_URL &&
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  )
+  return !!getSupabaseConfig()
 }
 
 export async function incrementarVisitas(slug: string): Promise<void> {

@@ -2,21 +2,21 @@ import 'server-only'
 
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
+import { getSupabaseConfig } from './url'
 
 // Cliente de Supabase para Server Components.
 // Si faltan variables de entorno, devuelve null para permitir builds con datos mock.
 
 export async function createClient() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const config = getSupabaseConfig()
 
-  if (!supabaseUrl || !supabaseAnonKey) {
+  if (!config) {
     return null
   }
 
   const cookieStore = await cookies()
 
-  return createServerClient(supabaseUrl, supabaseAnonKey, {
+  return createServerClient(config.supabaseUrl, config.supabaseAnonKey, {
     cookies: {
       getAll() {
         return cookieStore.getAll()

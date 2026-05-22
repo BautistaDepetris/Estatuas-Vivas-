@@ -2,14 +2,14 @@
 // Solo se usa en componentes con "use client"
 
 import { createBrowserClient } from '@supabase/ssr'
+import { getSupabaseConfig } from './url'
 
 export function createClient() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const config = getSupabaseConfig()
 
-  if (!supabaseUrl || !supabaseAnonKey) {
+  if (!config) {
     return null
   }
 
-  return createBrowserClient(supabaseUrl, supabaseAnonKey)
+  return createBrowserClient(config.supabaseUrl, config.supabaseAnonKey)
 }
