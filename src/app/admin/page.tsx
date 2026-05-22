@@ -1,12 +1,10 @@
 import Link from 'next/link'
-import { getTodasEstatuas } from '@/lib/supabase/queries'
+import { getAdminDashboardData } from '@/lib/supabase/queries'
 
 export const dynamic = 'force-dynamic'
 
 export default async function AdminDashboard() {
-  const estatuas = await getTodasEstatuas()
-  const totalImagenes = estatuas.reduce((acc, e) => acc + e.imagenes.length, 0)
-  const totalVisitas = estatuas.reduce((acc, e) => acc + e.visitas, 0)
+  const { estatuas, totalImagenes, totalVisitas } = await getAdminDashboardData()
 
   const metricas = [
     { numero: totalVisitas.toLocaleString('es-AR'), label: 'Visitas QR', delta: '+18% vs julio' },

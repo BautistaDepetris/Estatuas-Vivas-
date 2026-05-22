@@ -8,8 +8,7 @@ import ImageGallery from '@/components/estatua/ImageGallery'
 import NextStatuaButton from '@/components/estatua/NextStatuaButton'
 import QuoteCard from '@/components/estatua/QuoteCard'
 import LugarRow from '@/components/estatua/LugarRow'
-import { ESTATUAS_MOCK, getSiguienteEstatua } from '@/lib/data/estatuas-mock'
-import { getEstatua } from '@/lib/supabase/queries'
+import { getEstatua, getSiguienteEstatuaPublica } from '@/lib/supabase/queries'
 import VisitaTracker from './VisitaTracker'
 
 interface PageProps {
@@ -24,10 +23,6 @@ const audioTracks = [
 ]
 
 export const dynamic = 'force-dynamic'
-
-export async function generateStaticParams() {
-  return ESTATUAS_MOCK.map((e) => ({ slug: e.slug }))
-}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
@@ -51,7 +46,7 @@ export default async function EstatuaPage({ params }: PageProps) {
 
   if (!estatua) notFound()
 
-  const siguiente = getSiguienteEstatua(slug)
+  const siguiente = await getSiguienteEstatuaPublica(slug)
 
   return (
     <main className="paper-bg" style={{ background: 'var(--bg)', color: 'var(--ink)', minHeight: '100vh', paddingBottom: '64px' }}>

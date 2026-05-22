@@ -18,6 +18,12 @@ export interface LugarPueblo extends Lugar {
   orden?: number
 }
 
+export interface AdminDashboardData {
+  estatuas: Estatua[]
+  totalImagenes: number
+  totalVisitas: number
+}
+
 function supabaseConfigurado(): boolean {
   return !!(
     process.env.NEXT_PUBLIC_SUPABASE_URL &&
@@ -85,6 +91,60 @@ export async function getTodasEstatuas(): Promise<Estatua[]> {
     console.error('[getTodasEstatuas] Error al consultar Supabase:', err)
     return ESTATUAS_MOCK
   }
+}
+
+export async function getAdminDashboardData(): Promise<AdminDashboardData> {
+  const emptyData = {
+    estatuas: [],
+    totalImagenes: 0,
+    totalVisitas: 0,
+  }
+
+  if (!supabaseConfigurado()) {
+    return emptyData
+  }
+
+  try {
+    const supabase = await createClient()
+    if (!supabase) return emptyData
+
+    const { data, error } = await supabase
+      .from('estatuas')
+      .select(`
+        *,
+        capitulos(*),
+        imagenes:estatua_imagenes(*),
+        lugares(*)
+      `)
+      .order('orden', { ascending: true })
+
+    if (error || !data) return emptyData
+
+    const estatuas = (data as Estatua[]).map((estatua) => ({
+      ...estatua,
+      capitulos: ordenarPorOrden(estatua.capitulos),
+      imagenes: ordenarPorOrden(estatua.imagenes),
+      lugares: ordenarPorOrden(estatua.lugares),
+    }))
+
+    return {
+      estatuas,
+      totalImagenes: estatuas.reduce((acc, estatua) => acc + estatua.imagenes.length, 0),
+      totalVisitas: estatuas.reduce((acc, estatua) => acc + estatua.visitas, 0),
+    }
+  } catch (err) {
+    console.error('[getAdminDashboardData] Error al consultar Supabase:', err)
+    return emptyData
+  }
+}
+
+export async function getSiguienteEstatuaPublica(slugActual: string): Promise<Estatua | null> {
+  const estatuas = await getTodasEstatuas()
+  const index = estatuas.findIndex((estatua) => estatua.slug === slugActual)
+
+  if (index === -1 || !estatuas.length) return null
+
+  return estatuas[(index + 1) % estatuas.length]
 }
 
 export async function getGaleriaPublica(): Promise<GaleriaItem[]> {

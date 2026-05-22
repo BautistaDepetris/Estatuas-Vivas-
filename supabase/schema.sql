@@ -39,6 +39,7 @@ create table lugares (
   nombre text not null,
   descripcion text,
   categoria text,
+  imagen_url text,
   orden int default 0
 );
 
