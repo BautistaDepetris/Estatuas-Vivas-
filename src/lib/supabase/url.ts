@@ -13,7 +13,7 @@ export function getSupabaseConfig() {
 }
 
 function normalizarSupabaseUrl(rawUrl: string) {
-  const trimmedUrl = rawUrl.trim()
+  const trimmedUrl = rawUrl.trim().replace(/^['"]|['"]$/g, '')
 
   try {
     const url = new URL(trimmedUrl)

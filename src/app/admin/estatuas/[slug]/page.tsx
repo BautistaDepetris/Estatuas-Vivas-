@@ -42,10 +42,14 @@ function esRegistroReal(id?: string) {
   return !!id && !id.startsWith('mock-') && !id.startsWith('local-')
 }
 
+function esUuid(valor: string) {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(valor)
+}
+
 export default function AdminEstatuaEditorPage({ params }: AdminEstatuaEditorPageProps) {
   const slug = use(params).slug
   const estatuaMock = ESTATUAS_MOCK.find((item) => item.slug === slug)
-  const [estatuaId, setEstatuaId] = useState(estatuaMock?.id ?? '')
+  const [estatuaId, setEstatuaId] = useState('')
   const [tituloEstatua, setTituloEstatua] = useState(estatuaMock?.nombre ?? '')
   const [subtituloEstatua, setSubtituloEstatua] = useState(estatuaMock?.subtitulo ?? '')
   const [capitulos, setCapitulos] = useState<CapituloAdmin[]>([])
@@ -202,6 +206,25 @@ export default function AdminEstatuaEditorPage({ params }: AdminEstatuaEditorPag
     return data.publicUrl
   }
 
+  const obtenerEstatuaId = async () => {
+    if (!supabase) return null
+    if (esUuid(estatuaId)) return estatuaId
+
+    const { data, error: selectError } = await supabase
+      .from('estatuas')
+      .select('id')
+      .eq('slug', slug)
+      .single()
+
+    if (selectError || !data?.id) {
+      return null
+    }
+
+    const id = String(data.id)
+    setEstatuaId(id)
+    return id
+  }
+
   const guardarCapitulos = async () => {
     if (capitulos.some((capitulo) => !capitulo.titulo.trim() || !capitulo.texto.trim())) {
       avisarError('Completá título y texto en los 7 capítulos.')
@@ -309,22 +332,32 @@ export default function AdminEstatuaEditorPage({ params }: AdminEstatuaEditorPag
       avisarError('Completá todos los campos del lugar.')
       return
     }
-    if (!supabase || !estatuaId) {
+    if (!supabase) {
       avisarError('Supabase no está configurado. El lugar no se puede guardar todavía.')
       return
     }
 
     try {
+      const estatuaIdReal = await obtenerEstatuaId()
+      if (!estatuaIdReal) {
+        avisarError('No se encontró el ID de la estatua en Supabase.')
+        return
+      }
+
       const imagenUrl = await subirImagen(lugarForm.archivo)
       const nuevoLugar = {
-        estatua_id: estatuaId,
+        estatua_id: estatuaIdReal,
         nombre: lugarForm.nombre.trim(),
         descripcion: lugarForm.descripcion.trim(),
         categoria: lugarForm.categoria.trim(),
         imagen_url: imagenUrl,
         orden: lugares.length,
       }
-      const { data, error: insertError } = await supabase.from('lugares').insert(nuevoLugar).select('*').single()
+      const { data, error: insertError } = await supabase
+        .from('lugares')
+        .insert(nuevoLugar)
+        .select('id,nombre,descripcion,categoria,imagen_url,orden')
+        .single()
       if (insertError) throw insertError
 
       setLugares((prev) => [

@@ -5,6 +5,10 @@ import { createBrowserClient } from '@supabase/ssr'
 import { getSupabaseConfig } from './url'
 
 export function createClient() {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
   const config = getSupabaseConfig()
 
   if (!config) {
