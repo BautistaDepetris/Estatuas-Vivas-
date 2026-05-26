@@ -25,7 +25,7 @@ export default function HeroSection({ estatua }: HeroSectionProps) {
       </div>
       <div
         style={{
-          background: 'linear-gradient(180deg, transparent 0%, rgba(245,237,216,0.48) 52%, var(--bg) 94%)',
+          background: 'linear-gradient(90deg, rgba(9,9,8,0.86) 0%, rgba(9,9,8,0.48) 44%, rgba(9,9,8,0.18) 100%), linear-gradient(180deg, rgba(9,9,8,0.08) 0%, rgba(9,9,8,0.18) 56%, var(--bg) 96%)',
           inset: 0,
           pointerEvents: 'none',
           position: 'absolute',
@@ -37,9 +37,9 @@ export default function HeroSection({ estatua }: HeroSectionProps) {
         style={{
           alignItems: 'center',
           backdropFilter: 'blur(8px)',
-          background: 'rgba(245,237,216,0.85)',
-          border: '0.5px solid var(--border)',
-          color: 'var(--brown)',
+          background: 'rgba(9,9,8,0.72)',
+          border: '0.5px solid rgba(239,227,203,0.22)',
+          color: 'var(--ink)',
           display: 'inline-flex',
           height: '36px',
           justifyContent: 'center',
@@ -56,9 +56,9 @@ export default function HeroSection({ estatua }: HeroSectionProps) {
         href="/"
         style={{
           alignItems: 'center',
-          background: 'rgba(245,237,216,0.9)',
-          border: '0.5px solid var(--red)',
-          color: 'var(--red)',
+          background: 'rgba(9,9,8,0.74)',
+          border: '0.5px solid rgba(200,163,109,0.55)',
+          color: 'var(--ink)',
           display: 'inline-flex',
           fontSize: '10px',
           fontWeight: 500,
