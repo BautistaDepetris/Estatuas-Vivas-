@@ -14,11 +14,12 @@ export function getSupabaseConfig() {
 
 function normalizarSupabaseUrl(rawUrl: string) {
   const trimmedUrl = rawUrl.trim().replace(/^['"]|['"]$/g, '')
+  const urlConProtocolo = trimmedUrl.startsWith('//') ? `https:${trimmedUrl}` : trimmedUrl
 
   try {
-    const url = new URL(trimmedUrl)
+    const url = new URL(urlConProtocolo)
     return url.origin
   } catch {
-    return trimmedUrl.replace(/\/+(rest|storage)\/v1.*$/, '').replace(/\/+$/, '')
+    return urlConProtocolo.replace(/\/+(rest|storage)\/v1.*$/, '').replace(/\/+$/, '')
   }
 }

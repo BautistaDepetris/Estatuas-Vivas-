@@ -439,7 +439,7 @@ export default function AdminEstatuaEditorPage({ params }: AdminEstatuaEditorPag
                     style={{
                       background: 'var(--paper)',
                       border: '0.5px solid var(--border)',
-                      color: 'var(--ink)',
+                      color: '#1C1008',
                       fontFamily: 'var(--font-body)',
                       minHeight: '120px',
                       padding: '12px 14px',
@@ -464,7 +464,7 @@ export default function AdminEstatuaEditorPage({ params }: AdminEstatuaEditorPag
             style={{
               background: 'var(--paper)',
               border: '0.5px solid var(--border)',
-              color: 'var(--ink)',
+              color: '#1C1008',
               fontFamily: 'var(--font-display)',
               fontSize: '22px',
               fontStyle: 'italic',
