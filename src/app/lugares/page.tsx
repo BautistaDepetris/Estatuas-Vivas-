@@ -2,14 +2,12 @@ import Link from 'next/link'
 import Butterfly from '@/components/estatua/Butterfly'
 import EditorialNum from '@/components/estatua/EditorialNum'
 import FramedPainting from '@/components/estatua/FramedPainting'
-import { getTodasEstatuas } from '@/lib/supabase/queries'
+import { getLugaresPueblo } from '@/lib/supabase/queries'
 
 export const dynamic = 'force-dynamic'
 
 export default async function LugaresPage() {
-  const estatuas = await getTodasEstatuas()
-  const lugares = estatuas.flatMap((estatua) => estatua.lugares)
-  const lugaresUnicos = lugares.filter((lugar, index, array) => array.findIndex((item) => item.nombre === lugar.nombre) === index)
+  const lugares = await getLugaresPueblo()
   const tones = ['pastoral', 'sepia', 'portrait', 'sky'] as const
 
   return (
@@ -40,9 +38,9 @@ export default async function LugaresPage() {
       </section>
 
       <section style={{ display: 'flex', flexDirection: 'column', gap: '40px', padding: '32px 26px 48px' }}>
-        {lugaresUnicos.map((lugar, index) => (
+        {lugares.map((lugar, index) => (
           <article key={`${lugar.nombre}-${index}`}>
-            <FramedPainting alt={lugar.nombre} height={180} tone={tones[index % tones.length]} />
+            <FramedPainting src={lugar.imagen_url} alt={lugar.nombre} height={180} tone={tones[index % tones.length]} />
             <div style={{ alignItems: 'flex-start', display: 'flex', gap: '14px', paddingTop: '20px' }}>
               <span style={{ color: 'var(--red)', fontFamily: 'var(--font-display)', fontSize: '18px', fontStyle: 'italic', minWidth: '30px' }}>
                 /{String(index + 1).padStart(2, '0')}

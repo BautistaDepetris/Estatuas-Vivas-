@@ -2,18 +2,12 @@ import Link from 'next/link'
 import Butterfly from '@/components/estatua/Butterfly'
 import EditorialNum from '@/components/estatua/EditorialNum'
 import FramedPainting from '@/components/estatua/FramedPainting'
-import { getTodasEstatuas } from '@/lib/supabase/queries'
+import { getGaleriaPublica } from '@/lib/supabase/queries'
 
 export const dynamic = 'force-dynamic'
 
 export default async function GaleriaPage() {
-  const estatuas = await getTodasEstatuas()
-  const imagenes = estatuas.flatMap((estatua) =>
-    estatua.imagenes.map((imagen) => ({
-      ...imagen,
-      estatuaNombre: estatua.nombre,
-    }))
-  )
+  const imagenes = await getGaleriaPublica()
 
   return (
     <main className="paper-bg" style={{ background: 'var(--bg)', color: 'var(--ink)', minHeight: '100vh' }}>

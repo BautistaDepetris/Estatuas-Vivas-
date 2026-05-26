@@ -10,6 +10,7 @@ import { getSupabaseConfig } from './url'
 
 export interface GaleriaItem extends EstatuaImagen {
   id: string
+  created_at?: string
   orden?: number
 }
 
@@ -43,10 +44,20 @@ export async function getEstatua(slug: string): Promise<Estatua | null> {
     const { data: estatua, error } = await supabase
       .from('estatuas')
       .select(`
-        *,
-        capitulos(*),
-        imagenes:estatua_imagenes(*),
-        lugares(*)
+        id,
+        slug,
+        nombre,
+        subtitulo,
+        frase,
+        audio_url,
+        activa,
+        orden,
+        visitas,
+        created_at,
+        updated_at,
+        capitulos(id, estatua_id, titulo, texto, orden),
+        imagenes:estatua_imagenes(id, estatua_id, url, titulo, descripcion, categoria, orden),
+        lugares(id, estatua_id, nombre, descripcion, categoria, orden, imagen_url)
       `)
       .eq('slug', slug)
       .eq('activa', true)
@@ -72,10 +83,20 @@ export async function getTodasEstatuas(): Promise<Estatua[]> {
     const { data, error } = await supabase
       .from('estatuas')
       .select(`
-        *,
-        capitulos(*),
-        imagenes:estatua_imagenes(*),
-        lugares(*)
+        id,
+        slug,
+        nombre,
+        subtitulo,
+        frase,
+        audio_url,
+        activa,
+        orden,
+        visitas,
+        created_at,
+        updated_at,
+        capitulos(id, estatua_id, titulo, texto, orden),
+        imagenes:estatua_imagenes(id, estatua_id, url, titulo, descripcion, categoria, orden),
+        lugares(id, estatua_id, nombre, descripcion, categoria, orden, imagen_url)
       `)
       .eq('activa', true)
       .order('orden', { ascending: true })
@@ -109,10 +130,20 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
     const { data, error } = await supabase
       .from('estatuas')
       .select(`
-        *,
-        capitulos(*),
-        imagenes:estatua_imagenes(*),
-        lugares(*)
+        id,
+        slug,
+        nombre,
+        subtitulo,
+        frase,
+        audio_url,
+        activa,
+        orden,
+        visitas,
+        created_at,
+        updated_at,
+        capitulos(id, estatua_id, titulo, texto, orden),
+        imagenes:estatua_imagenes(id, estatua_id, url, titulo, descripcion, categoria, orden),
+        lugares(id, estatua_id, nombre, descripcion, categoria, orden, imagen_url)
       `)
       .order('orden', { ascending: true })
 
@@ -154,7 +185,7 @@ export async function getGaleriaPublica(): Promise<GaleriaItem[]> {
 
     const { data, error } = await supabase
       .from('galeria')
-      .select('*')
+      .select('id, url, titulo, descripcion, categoria, orden, created_at')
       .order('orden', { ascending: true })
 
     if (error || !data?.length) return getGaleriaMock()
@@ -166,6 +197,7 @@ export async function getGaleriaPublica(): Promise<GaleriaItem[]> {
       descripcion: item.descripcion,
       categoria: item.categoria,
       orden: item.orden,
+      created_at: item.created_at,
     }))
   } catch (err) {
     console.error('[getGaleriaPublica] Error al consultar Supabase:', err)
@@ -182,7 +214,7 @@ export async function getLugaresPueblo(): Promise<LugarPueblo[]> {
 
     const { data, error } = await supabase
       .from('lugares_pueblo')
-      .select('*')
+      .select('id, nombre, descripcion, categoria, imagen_url, orden')
       .order('orden', { ascending: true })
 
     if (error || !data?.length) return getLugaresPuebloMock()
