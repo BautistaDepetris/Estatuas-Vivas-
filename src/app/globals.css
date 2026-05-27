@@ -424,9 +424,9 @@ p {
 
 .home-bg {
   background:
-    linear-gradient(rgba(13, 13, 13, 0.72), rgba(13, 13, 13, 0.9)),
+    linear-gradient(rgba(245, 237, 216, 0.16), rgba(13, 13, 13, 0.34)),
     url('/assets/Lienzo%20de%20fondo.png'),
-    #0D0D0D;
+    #F5EDD8;
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
@@ -437,10 +437,13 @@ p {
 
 .home-shell {
   background:
-    linear-gradient(90deg, rgba(245, 237, 216, 0.045) 1px, transparent 1px),
-    radial-gradient(circle at 75% 18%, rgba(166, 132, 76, 0.1), transparent 20rem),
-    linear-gradient(180deg, rgba(13, 13, 13, 0.76), rgba(13, 13, 13, 0.88) 56%, rgba(13, 13, 13, 0.94));
-  background-size: 295px 100%, auto, auto;
+    linear-gradient(90deg, rgba(28, 16, 8, 0.08) 1px, transparent 1px),
+    radial-gradient(circle at 72% 18%, rgba(28, 16, 8, 0.12), transparent 22rem),
+    linear-gradient(180deg, rgba(13, 13, 13, 0.52) 0%, rgba(13, 13, 13, 0.66) 42%, rgba(13, 13, 13, 0.78) 100%),
+    url('/assets/Lienzo%20de%20fondo.png'),
+    #F5EDD8;
+  background-position: 0 0, center, center, center, center;
+  background-size: 295px 100%, auto, auto, cover, auto;
   border: 1px solid rgba(245, 237, 216, 0.1);
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.62);
   margin: 0 auto;
