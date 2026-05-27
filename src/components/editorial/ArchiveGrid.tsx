@@ -1,3 +1,5 @@
+import OrnamentalFrame from './OrnamentalFrame'
+
 interface ArchiveGridItem {
   categoria?: string | null
   descripcion?: string | null
@@ -14,31 +16,16 @@ export default function ArchiveGrid({ items }: ArchiveGridProps) {
   if (!items.length) return null
 
   return (
-    <div style={{ display: 'grid', gap: '18px', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}>
+    <div className="editorial-grid">
       {items.map((item, index) => (
         <article key={item.id ?? `${item.url}-${index}`} style={{ color: '#F5EDD8' }}>
-          <div
-            style={{
-              aspectRatio: index % 3 === 0 ? '1 / 1.18' : '1 / 0.88',
-              background: '#1C1008',
-              border: '3px solid #C9A84C',
-              boxShadow: '0 14px 32px rgba(0,0,0,0.34), inset 0 0 0 1px rgba(255,235,165,0.42)',
-              overflow: 'hidden',
-            }}
-          >
-            {item.url ? (
-              <img
-                src={item.url}
-                alt={item.titulo}
-                style={{
-                  filter: 'sepia(0.24) saturate(0.82) contrast(1.04)',
-                  height: '100%',
-                  objectFit: 'cover',
-                  width: '100%',
-                }}
-              />
-            ) : null}
-          </div>
+          <OrnamentalFrame
+            alt={item.titulo}
+            aspectRatio={index % 3 === 0 ? '4 / 3.35' : '4 / 2.9'}
+            className="ornamental-frame--compact"
+            src={item.url}
+            variant="horizontal"
+          />
           <div style={{ paddingTop: '12px' }}>
             {item.categoria && (
               <p style={{ color: '#C9A84C', fontSize: '8px', letterSpacing: '0.22em', marginBottom: '6px', textTransform: 'uppercase' }}>

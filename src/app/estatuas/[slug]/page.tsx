@@ -49,11 +49,11 @@ export default async function EstatuaPage({ params }: PageProps) {
   const siguiente = await getSiguienteEstatuaPublica(slug)
 
   return (
-    <main className="paper-bg" style={{ background: 'var(--bg)', color: 'var(--ink)', minHeight: '100vh', paddingBottom: '64px' }}>
+    <main className="paper-bg" style={{ backgroundColor: 'var(--bg)', color: 'var(--ink)', minHeight: '100vh', paddingBottom: '64px' }}>
       <VisitaTracker slug={slug} />
       <HeroSection estatua={estatua} />
 
-      <section className="paper-bg" style={{ background: 'var(--bg)', padding: '56px 26px 48px' }}>
+      <section className="paper-bg" style={{ backgroundColor: 'var(--bg)', padding: '56px 26px 48px' }}>
         <EditorialNum num="01" label="Audios" />
         <div className="hr-brown" style={{ margin: '12px 0 24px' }} />
         <h2 style={{ fontSize: '30px', marginBottom: '28px' }}>
@@ -73,7 +73,7 @@ export default async function EstatuaPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="paper-bg" style={{ background: 'var(--bg)', padding: '56px 0 48px' }}>
+      <section className="paper-bg" style={{ backgroundColor: 'var(--bg)', padding: '56px 0 48px' }}>
         <div style={{ padding: '0 26px' }}>
           <EditorialNum num="02" label="Capítulos Escritos" />
           <div className="hr-brown" style={{ margin: '12px 0 24px' }} />

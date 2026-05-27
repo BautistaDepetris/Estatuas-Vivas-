@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import ArchiveGrid from '@/components/editorial/ArchiveGrid'
 import MuseumFeatureCard from '@/components/editorial/MuseumFeatureCard'
+import OrnamentalFrame from '@/components/editorial/OrnamentalFrame'
 import PlaceEditorialCard from '@/components/editorial/PlaceEditorialCard'
 import { getGaleriaPublica, getLugaresPueblo, getTodasEstatuas } from '@/lib/supabase/queries'
 
@@ -71,9 +72,13 @@ export default async function HomePage() {
           <div className="sv-archive-grid">
             {estatuas.map((estatua) => (
               <Link className="sv-archive-card" href={`/estatuas/${estatua.slug}`} key={estatua.id}>
-                <div className="sv-archive-image">
-                  {estatua.imagenes[0]?.url ? <img src={estatua.imagenes[0].url} alt={estatua.nombre} /> : <span />}
-                </div>
+                <OrnamentalFrame
+                  alt={estatua.nombre}
+                  aspectRatio="16 / 10.4"
+                  className="ornamental-frame--compact"
+                  src={estatua.imagenes[0]?.url}
+                  variant="sides"
+                />
                 <p>{estatua.subtitulo}</p>
                 <h3>{estatua.nombre}</h3>
                 <span>{estatua.frase}</span>
