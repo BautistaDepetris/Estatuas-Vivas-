@@ -63,9 +63,12 @@ const galleryFrameStyle = {
 const galleryPhotoStyle = {
   display: 'block',
   filter: 'sepia(0.28) saturate(0.82) contrast(1.08) brightness(0.9)',
-  height: '100%',
+  height: '72%',
+  inset: '14%',
   objectFit: 'cover',
-  width: '100%',
+  position: 'absolute',
+  width: '72%',
+  zIndex: 1,
 } as const
 
 const galleryFrameOverlayStyle = {
