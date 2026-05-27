@@ -41,44 +41,53 @@ const horizontalCardStyle = {
 
 const galleryCardStyle = {
   background: '#F5EDD8',
-  border: '1px solid rgba(89,54,14,0.48)',
-  boxShadow: '0 24px 48px rgba(0,0,0,0.36), inset 0 0 0 1px rgba(255,248,222,0.82)',
+  border: '6px solid #1C1008',
+  boxShadow: '0 8px 32px rgba(0,0,0,0.6)',
   color: '#1C1008',
   display: 'flex',
-  flex: '0 0 min(350px, 84vw)',
   flexDirection: 'column',
+  flexShrink: 0,
+  minWidth: '280px',
   overflow: 'hidden',
+  width: 'min(340px, 82vw)',
 } as const
 
 const galleryFrameStyle = {
-  background: 'linear-gradient(135deg, #5D340B 0%, #C9A84C 16%, #F3DA86 27%, #8A5D1A 45%, #D4B258 62%, #6A3C0E 82%, #E7C76D 100%)',
-  border: '11px solid #C9A84C',
-  boxShadow: [
-    'inset 0 0 0 2px rgba(84,48,10,0.9)',
-    'inset 0 0 0 6px rgba(255,232,150,0.42)',
-    'inset 0 0 24px rgba(29,15,3,0.72)',
-    '0 1px 0 rgba(255,246,202,0.5)',
-  ].join(', '),
-  height: '206px',
-  margin: '14px 14px 0',
-  outline: '2px solid rgba(242,207,111,0.9)',
-  outlineOffset: '-7px',
-  padding: '5px',
+  background: '#1C1008',
+  borderBottom: '6px solid #1C1008',
+  height: '210px',
+  overflow: 'hidden',
+  position: 'relative',
 } as const
 
 const galleryPhotoStyle = {
-  filter: 'sepia(0.32) saturate(0.78) contrast(1.04) brightness(0.92)',
+  display: 'block',
+  filter: 'sepia(0.28) saturate(0.82) contrast(1.08) brightness(0.9)',
   height: '100%',
   objectFit: 'cover',
   width: '100%',
 } as const
 
+const galleryFrameOverlayStyle = {
+  height: '100%',
+  inset: 0,
+  objectFit: 'fill',
+  pointerEvents: 'none',
+  position: 'absolute',
+  width: '100%',
+  zIndex: 2,
+} as const
+
 const galleryContentStyle = {
-  background: '#F5EDD8',
+  backgroundColor: '#F5EDD8',
+  backgroundImage: 'linear-gradient(rgba(245,237,216,0.82), rgba(245,237,216,0.82)), url("/assets/textura-papel.png.png")',
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',
   display: 'flex',
   flex: 1,
   flexDirection: 'column',
-  padding: '20px 24px 24px',
+  minHeight: '190px',
+  padding: '28px 28px 26px',
 } as const
 
 const galleryButtonStyle = {
@@ -86,20 +95,25 @@ const galleryButtonStyle = {
   background: '#8B1A1A',
   color: '#F5EDD8',
   display: 'inline-flex',
-  fontSize: '10px',
-  justifyContent: 'center',
-  letterSpacing: '0.22em',
-  marginTop: '18px',
-  padding: '13px 16px',
+  fontSize: '12px',
+  justifyContent: 'space-between',
+  letterSpacing: '0.28em',
+  marginTop: '0',
+  padding: '20px 28px',
   textTransform: 'uppercase',
+  width: '100%',
 } as const
 
 const horizontalScrollStyle = {
   display: 'flex',
   flexWrap: 'nowrap',
-  gap: '24px',
+  gap: '22px',
+  marginRight: '-26px',
+  msOverflowStyle: 'none',
   overflowX: 'auto',
   paddingBottom: '10px',
+  paddingRight: '26px',
+  scrollbarWidth: 'none',
 } as const
 
 export default async function HomePage() {
@@ -181,17 +195,19 @@ export default async function HomePage() {
               <article key={imagen.id} style={galleryCardStyle}>
                 <div style={galleryFrameStyle}>
                   <img src={imagen.url} alt={imagen.titulo} style={galleryPhotoStyle} />
+                  <img src="/assets/marco-dorado.png.png" alt="" aria-hidden="true" style={galleryFrameOverlayStyle} />
                 </div>
                 <div style={galleryContentStyle}>
-                  <p style={{ color: '#8B1A1A', fontSize: '9px', letterSpacing: '0.28em', marginBottom: '10px', textTransform: 'uppercase' }}>
+                  <p style={{ color: '#8B1A1A', fontSize: '11px', letterSpacing: '0.15em', marginBottom: '14px', textTransform: 'uppercase' }}>
                     {imagen.categoria}
                   </p>
-                  <h3 style={{ color: '#251409', fontFamily: 'var(--font-display)', fontSize: '30px', fontStyle: 'italic', lineHeight: 1.02 }}>{imagen.titulo}</h3>
-                  <p style={{ color: '#3D2A14', flex: 1, fontSize: '14px', lineHeight: 1.5, marginTop: '12px' }}>{imagen.descripcion}</p>
-                  <Link href="/galeria" style={galleryButtonStyle}>
-                    Ver detalle
-                  </Link>
+                  <h3 style={{ color: '#1C1008', fontFamily: 'var(--font-display)', fontSize: '34px', fontStyle: 'italic', lineHeight: 1.02 }}>{imagen.titulo}</h3>
+                  <p style={{ color: '#3D2B1F', flex: 1, fontSize: '15px', lineHeight: 1.45, marginTop: '14px' }}>{imagen.descripcion}</p>
                 </div>
+                <Link href="/galeria" style={galleryButtonStyle}>
+                  <span>Ver más</span>
+                  <span aria-hidden="true">→</span>
+                </Link>
               </article>
             ))}
           </div>
