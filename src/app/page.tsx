@@ -45,10 +45,9 @@ export default async function HomePage() {
           <span className="home-lang">ES</span>
         </header>
 
-        <section className="home-hero" style={{ paddingBottom: '80px' }}>
+        <section className="home-hero">
           <div className="home-hero-portrait" />
           <div className="home-hero-copy">
-            <p className="home-kicker">Patrimonio Cultural · Cordoba, Argentina</p>
             <h1>
               Las
               <br />
@@ -58,15 +57,12 @@ export default async function HomePage() {
             </h1>
             <span className="home-red-line" />
             <p className="home-lead">Acercate a una estatua del pueblo, escanea su QR, y dejala que te cuente.</p>
-            <Link className="home-cta" href="/lugares">
-              Explorar el pueblo <span>→</span>
-            </Link>
           </div>
         </section>
 
-        <section className="sv-section" id="estatuas">
+        <section className="sv-section home-statues-section" id="estatuas">
           <div className="sv-section-heading">
-            <p style={{ color: '#F5EDD8' }}>01 · Estatuas</p>
+            <p style={{ color: '#F5EDD8' }}>01 - Estatuas</p>
             <h2>Historias que esperan ser escuchadas.</h2>
           </div>
           <div className="sv-archive-grid">
@@ -87,9 +83,9 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section className="sv-section" style={{ background: '#0D0D0D' }}>
+        <section className="sv-section">
           <div className="sv-section-heading">
-            <p>02 · Galeria Historica</p>
+            <p>02 - Galeria Historica</p>
             <h2>Archivo visual del pueblo.</h2>
           </div>
           <div style={{ display: 'grid', gap: '28px' }}>
@@ -105,14 +101,14 @@ export default async function HomePage() {
             )}
             <ArchiveGrid items={imagenesGaleria.slice(1, 5)} />
             <Link className="sv-text-link" href="/galeria" style={{ justifySelf: 'start', marginTop: '6px' }}>
-              Ver galeria completa <span>→</span>
+              Ver galeria completa <span>-&gt;</span>
             </Link>
           </div>
         </section>
 
-        <section className="sv-section" id="contacto" style={{ background: '#0D0D0D' }}>
+        <section className="sv-section" id="contacto">
           <div className="sv-section-heading">
-            <p>03 · Lugares</p>
+            <p>03 - Lugares</p>
             <h2>El pueblo recomienda.</h2>
           </div>
           <div style={{ borderBottom: '1px solid rgba(201,168,76,0.32)' }}>
@@ -128,7 +124,7 @@ export default async function HomePage() {
             ))}
           </div>
           <Link className="sv-text-link" href="/lugares">
-            Ver todos los lugares <span>→</span>
+            Ver todos los lugares <span>-&gt;</span>
           </Link>
         </section>
       </div>

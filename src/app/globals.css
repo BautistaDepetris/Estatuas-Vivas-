@@ -424,11 +424,12 @@ p {
 
 .home-bg {
   background:
-    radial-gradient(circle at 50% 0%, rgba(139, 26, 26, 0.11), transparent 34rem),
-    linear-gradient(90deg, rgba(245, 237, 216, 0.035) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(245, 237, 216, 0.022) 1px, transparent 1px),
+    linear-gradient(rgba(13, 13, 13, 0.72), rgba(13, 13, 13, 0.9)),
+    url('/assets/Lienzo%20de%20fondo.png'),
     #0D0D0D;
-  background-size: auto, 295px 100%, 100% 220px, auto;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
   color: #F5EDD8;
   min-height: 100vh;
   padding: 0;
@@ -436,9 +437,9 @@ p {
 
 .home-shell {
   background:
-    linear-gradient(90deg, rgba(245, 237, 216, 0.055) 1px, transparent 1px),
-    radial-gradient(circle at 75% 26%, rgba(166, 132, 76, 0.09), transparent 22rem),
-    linear-gradient(180deg, rgba(13, 13, 13, 0.96), rgba(13, 13, 13, 0.98));
+    linear-gradient(90deg, rgba(245, 237, 216, 0.045) 1px, transparent 1px),
+    radial-gradient(circle at 75% 18%, rgba(166, 132, 76, 0.1), transparent 20rem),
+    linear-gradient(180deg, rgba(13, 13, 13, 0.76), rgba(13, 13, 13, 0.88) 56%, rgba(13, 13, 13, 0.94));
   background-size: 295px 100%, auto, auto;
   border: 1px solid rgba(245, 237, 216, 0.1);
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.62);
@@ -509,16 +510,16 @@ p {
 }
 
 .home-hero {
-  min-height: calc(100vh - 96px);
+  min-height: min(650px, calc(100vh - 96px));
   overflow: hidden;
-  padding: 46px 22px 0;
+  padding: 32px 22px 56px;
   position: relative;
 }
 
 .home-hero::before {
   background:
-    linear-gradient(180deg, rgba(13, 13, 13, 0.18), rgba(13, 13, 13, 0.82) 58%, #0D0D0D 100%),
-    linear-gradient(90deg, rgba(13, 13, 13, 0.9), rgba(13, 13, 13, 0.24) 58%, rgba(13, 13, 13, 0.72));
+    linear-gradient(180deg, rgba(13, 13, 13, 0.08), rgba(13, 13, 13, 0.74) 68%, rgba(13, 13, 13, 0.92) 100%),
+    linear-gradient(90deg, rgba(13, 13, 13, 0.82), rgba(13, 13, 13, 0.18) 58%, rgba(13, 13, 13, 0.58));
   content: "";
   inset: 0;
   pointer-events: none;
@@ -532,12 +533,13 @@ p {
   background-repeat: no-repeat;
   background-size: cover;
   filter: grayscale(0.2) sepia(0.16) contrast(1.12) brightness(0.72);
-  height: 520px;
+  bottom: 0;
+  height: auto;
   left: 0;
   opacity: 0.68;
   position: absolute;
   right: 0;
-  top: 68px;
+  top: 0;
   z-index: 0;
 }
 
@@ -561,7 +563,7 @@ p {
 .home-hero h1 {
   color: #F5EDD8;
   font-family: var(--font-display);
-  font-size: clamp(62px, 17vw, 86px);
+  font-size: clamp(68px, 18vw, 92px);
   font-style: italic;
   font-weight: 400;
   letter-spacing: 0;
@@ -573,7 +575,7 @@ p {
   background: #8B1A1A;
   display: block;
   height: 2px;
-  margin: 26px 0 20px;
+  margin: 24px 0 18px;
   width: 48px;
 }
 
@@ -584,6 +586,17 @@ p {
   font-style: italic;
   line-height: 1.45;
   max-width: 360px;
+}
+
+.home-statues-section {
+  margin-top: -26px;
+  padding-top: 52px;
+}
+
+.home-statues-section .sv-section-heading h2 {
+  font-size: clamp(34px, 11vw, 56px);
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .home-cta {
@@ -736,11 +749,11 @@ p {
 
 @media (min-width: 760px) {
   .home-bg {
-    padding: 16px 0;
+    padding: 0;
   }
 
   .home-shell {
-    min-height: calc(100vh - 32px);
+    min-height: 100vh;
   }
 
   .home-header {
@@ -785,20 +798,19 @@ p {
   }
 
   .home-hero {
-    min-height: calc(100vh - 150px);
-    padding: 38px 64px 310px;
+    min-height: min(720px, calc(100vh - 118px));
+    padding: 34px 64px 80px;
   }
 
   .home-hero::before {
     background:
-      linear-gradient(90deg, rgba(13, 13, 13, 0.98) 0%, rgba(13, 13, 13, 0.72) 36%, rgba(13, 13, 13, 0.08) 68%, rgba(13, 13, 13, 0.48) 100%),
-      linear-gradient(180deg, rgba(13, 13, 13, 0) 0%, rgba(13, 13, 13, 0.08) 62%, #0D0D0D 100%);
+      linear-gradient(90deg, rgba(13, 13, 13, 0.94) 0%, rgba(13, 13, 13, 0.66) 34%, rgba(13, 13, 13, 0.1) 68%, rgba(13, 13, 13, 0.42) 100%),
+      linear-gradient(180deg, rgba(13, 13, 13, 0) 0%, rgba(13, 13, 13, 0.1) 62%, rgba(13, 13, 13, 0.92) 100%);
   }
 
   .home-hero-portrait {
     background-position: center right;
-    height: auto;
-    inset: 0 0 250px 32%;
+    inset: -22px 0 0 31%;
     opacity: 0.98;
   }
 
@@ -807,12 +819,17 @@ p {
   }
 
   .home-hero h1 {
-    font-size: clamp(82px, 7.1vw, 116px);
+    font-size: clamp(92px, 7.4vw, 124px);
   }
 
   .home-lead {
     font-size: 21px;
     max-width: 430px;
+  }
+
+  .home-statues-section {
+    margin-top: -34px;
+    padding-top: 58px;
   }
 
   .home-card-row {
