@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import ArchiveGrid from '@/components/editorial/ArchiveGrid'
+import MuseumFeatureCard from '@/components/editorial/MuseumFeatureCard'
 import { getGaleriaPublica } from '@/lib/supabase/queries'
 
 export const dynamic = 'force-dynamic'
@@ -39,20 +41,17 @@ export default async function GaleriaPage() {
         </section>
 
         <section className="sv-section sv-gallery-section">
-          <div className="sv-gallery-grid">
-            {imagenes.map((imagen) => (
-              <article className="sv-feature-card" key={imagen.id}>
-                <div className="sv-card-image">
-                  <img src={imagen.url} alt={imagen.titulo} />
-                </div>
-                <div className="sv-card-copy">
-                  <p>{imagen.categoria}</p>
-                  <h2>{imagen.titulo}</h2>
-                  <span>{imagen.descripcion}</span>
-                </div>
-                <div className="sv-card-action">Archivo historico</div>
-              </article>
-            ))}
+          <div style={{ display: 'grid', gap: '36px' }}>
+            {imagenes[0] && (
+              <MuseumFeatureCard
+                actionLabel="Archivo historico"
+                categoria={imagenes[0].categoria}
+                descripcion={imagenes[0].descripcion}
+                imageUrl={imagenes[0].url}
+                titulo={imagenes[0].titulo}
+              />
+            )}
+            <ArchiveGrid items={imagenes.slice(1)} />
           </div>
         </section>
       </div>

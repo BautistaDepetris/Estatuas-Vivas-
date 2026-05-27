@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import PlaceEditorialCard from '@/components/editorial/PlaceEditorialCard'
 import { getLugaresPueblo } from '@/lib/supabase/queries'
 
 export const dynamic = 'force-dynamic'
@@ -39,19 +40,16 @@ export default async function LugaresPage() {
         </section>
 
         <section className="sv-section">
-          <div className="sv-place-list sv-place-list-large">
+          <div style={{ borderBottom: '1px solid rgba(201,168,76,0.32)' }}>
             {lugares.map((lugar, index) => (
-              <article className="sv-place-row" key={lugar.id}>
-                <span>/{String(index + 1).padStart(2, '0')}</span>
-                {lugar.imagen_url ? (
-                  <img src={lugar.imagen_url} alt={lugar.nombre} />
-                ) : null}
-                <div>
-                  <p>{lugar.categoria}</p>
-                  <h3>{lugar.nombre}</h3>
-                  <small>{lugar.descripcion}</small>
-                </div>
-              </article>
+              <PlaceEditorialCard
+                categoria={lugar.categoria}
+                descripcion={lugar.descripcion}
+                imageUrl={lugar.imagen_url}
+                index={index}
+                key={lugar.id}
+                nombre={lugar.nombre}
+              />
             ))}
           </div>
         </section>
