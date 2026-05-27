@@ -55,7 +55,7 @@ const galleryCardStyle = {
 const galleryFrameStyle = {
   background: '#1C1008',
   borderBottom: '6px solid #1C1008',
-  height: '210px',
+  height: '214px',
   overflow: 'hidden',
   position: 'relative',
 } as const
@@ -64,20 +64,22 @@ const galleryPhotoStyle = {
   display: 'block',
   filter: 'sepia(0.28) saturate(0.82) contrast(1.08) brightness(0.9)',
   height: '72%',
-  inset: '14%',
+  left: '7%',
   objectFit: 'cover',
   position: 'absolute',
-  width: '72%',
+  top: '16%',
+  width: '86%',
   zIndex: 1,
 } as const
 
 const galleryFrameOverlayStyle = {
-  height: '100%',
-  inset: 0,
+  height: '150%',
+  left: '-13%',
   objectFit: 'fill',
   pointerEvents: 'none',
   position: 'absolute',
-  width: '100%',
+  top: '-25%',
+  width: '126%',
   zIndex: 2,
 } as const
 
@@ -89,8 +91,8 @@ const galleryContentStyle = {
   display: 'flex',
   flex: 1,
   flexDirection: 'column',
-  minHeight: '190px',
-  padding: '28px 28px 26px',
+  minHeight: '148px',
+  padding: '22px 28px 20px',
 } as const
 
 const galleryButtonStyle = {
@@ -102,7 +104,7 @@ const galleryButtonStyle = {
   justifyContent: 'space-between',
   letterSpacing: '0.28em',
   marginTop: '0',
-  padding: '20px 28px',
+  padding: '18px 28px',
   textTransform: 'uppercase',
   width: '100%',
 } as const
@@ -201,11 +203,11 @@ export default async function HomePage() {
                   <img src="/assets/marco-dorado.png.png" alt="" aria-hidden="true" style={galleryFrameOverlayStyle} />
                 </div>
                 <div style={galleryContentStyle}>
-                  <p style={{ color: '#8B1A1A', fontSize: '11px', letterSpacing: '0.15em', marginBottom: '14px', textTransform: 'uppercase' }}>
+                  <p style={{ color: '#8B1A1A', fontSize: '11px', letterSpacing: '0.15em', marginBottom: '12px', textTransform: 'uppercase' }}>
                     {imagen.categoria}
                   </p>
-                  <h3 style={{ color: '#1C1008', fontFamily: 'var(--font-display)', fontSize: '34px', fontStyle: 'italic', lineHeight: 1.02 }}>{imagen.titulo}</h3>
-                  <p style={{ color: '#3D2B1F', flex: 1, fontSize: '15px', lineHeight: 1.45, marginTop: '14px' }}>{imagen.descripcion}</p>
+                  <h3 style={{ color: '#1C1008', fontFamily: 'var(--font-display)', fontSize: '31px', fontStyle: 'italic', lineHeight: 1.02 }}>{imagen.titulo}</h3>
+                  <p style={{ color: '#3D2B1F', flex: 1, fontSize: '14px', lineHeight: 1.38, marginTop: '12px' }}>{imagen.descripcion}</p>
                 </div>
                 <Link href="/galeria" style={galleryButtonStyle}>
                   <span>Ver más</span>
