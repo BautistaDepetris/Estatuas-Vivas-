@@ -16,7 +16,7 @@ const fontDisplay = "'Playfair Display', Georgia, serif"
 const fontBody = "'Inter', system-ui, -apple-system, sans-serif"
 
 const labelStyle: CSSProperties = {
-  color: '#6B4C2A',
+  color: '#3A0F0E',
   fontFamily: fontBody,
   fontSize: '9px',
   fontWeight: 500,
@@ -26,7 +26,7 @@ const labelStyle: CSSProperties = {
 }
 
 const titleStyle: CSSProperties = {
-  color: '#3D2A14',
+  color: '#3A0F0E',
   fontFamily: fontDisplay,
   fontSize: 'clamp(26px, 6vw, 38px)',
   fontStyle: 'italic',
@@ -36,7 +36,7 @@ const titleStyle: CSSProperties = {
 }
 
 const bodyStyle: CSSProperties = {
-  color: '#6B4C2A',
+  color: '#3A0F0E',
   fontFamily: fontBody,
   fontSize: '14px',
   fontWeight: 400,
@@ -44,7 +44,7 @@ const bodyStyle: CSSProperties = {
 }
 
 const actionStyle: CSSProperties = {
-  color: '#8B2020',
+  color: '#3A0F0E',
   fontFamily: fontBody,
   fontSize: '10px',
   fontWeight: 500,

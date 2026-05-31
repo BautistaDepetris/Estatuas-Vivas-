@@ -10,7 +10,7 @@ interface PlaceEditorialCardProps {
 const fontDisplay = "'Playfair Display', Georgia, serif";
 const fontBody = "'Inter', system-ui, -apple-system, sans-serif";
 const numStyle: CSSProperties = {
-    color: '#8B2020',
+    color: '#3A0F0E',
     fontFamily: fontDisplay,
     fontSize: '18px',
     fontStyle: 'italic',
@@ -18,7 +18,7 @@ const numStyle: CSSProperties = {
     letterSpacing: '-0.02em',
 };
 const labelStyle: CSSProperties = {
-    color: '#6B4C2A',
+    color: '#3A0F0E',
     fontFamily: fontBody,
     fontSize: '9px',
     fontWeight: 500,
@@ -27,7 +27,7 @@ const labelStyle: CSSProperties = {
     textTransform: 'uppercase',
 };
 const titleStyle: CSSProperties = {
-    color: '#3D2A14',
+    color: '#3A0F0E',
     fontFamily: fontDisplay,
     fontSize: '24px',
     fontStyle: 'italic',
@@ -36,7 +36,7 @@ const titleStyle: CSSProperties = {
     lineHeight: 1,
 };
 const bodyStyle: CSSProperties = {
-    color: '#6B4C2A',
+    color: '#3A0F0E',
     fontFamily: fontBody,
     fontSize: '13px',
     fontWeight: 400,

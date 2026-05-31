@@ -24,12 +24,12 @@ const pageStyle: CSSProperties = {
     backgroundRepeat: 'repeat',
     backgroundSize: '512px 512px',
     minHeight: '100vh',
-    color: '#1C1008',
+    color: '#3A0F0E',
     fontFamily: fontBody,
 };
 
 const brandNameStyle: CSSProperties = {
-    color: '#3D2A14',
+    color: '#3A0F0E',
     fontFamily: fontDisplay,
     fontSize: '28px',
     fontStyle: 'italic',
@@ -38,7 +38,7 @@ const brandNameStyle: CSSProperties = {
 };
 
 const brandMetaStyle: CSSProperties = {
-    color: '#6B4C2A',
+    color: '#3A0F0E',
     fontFamily: fontBody,
     fontSize: '10px',
     fontWeight: 500,
@@ -48,7 +48,7 @@ const brandMetaStyle: CSSProperties = {
 };
 
 const navTextStyle: CSSProperties = {
-    color: '#3D2A14',
+    color: '#3A0F0E',
     fontFamily: fontBody,
     fontSize: '10px',
     fontWeight: 500,
@@ -57,7 +57,7 @@ const navTextStyle: CSSProperties = {
 };
 
 const labelStyle: CSSProperties = {
-    color: '#6B4C2A',
+    color: '#3A0F0E',
     fontFamily: fontBody,
     fontSize: '9px',
     fontWeight: 500,
@@ -67,7 +67,7 @@ const labelStyle: CSSProperties = {
 };
 
 const heroTitleStyle: CSSProperties = {
-    color: '#1C1008',
+    color: '#3A0F0E',
     fontFamily: fontDisplay,
     fontSize: 'clamp(54px, 12vw, 96px)',
     fontStyle: 'italic',
@@ -77,7 +77,7 @@ const heroTitleStyle: CSSProperties = {
 };
 
 const sectionTitleStyle: CSSProperties = {
-    color: '#1C1008',
+    color: '#3A0F0E',
     fontFamily: fontDisplay,
     fontSize: 'clamp(34px, 7vw, 56px)',
     fontStyle: 'italic',
@@ -87,7 +87,7 @@ const sectionTitleStyle: CSSProperties = {
 };
 
 const cardTitleStyle: CSSProperties = {
-    color: '#3D2A14',
+    color: '#3A0F0E',
     fontFamily: fontDisplay,
     fontSize: 'clamp(24px, 5vw, 34px)',
     fontStyle: 'italic',
@@ -97,7 +97,7 @@ const cardTitleStyle: CSSProperties = {
 };
 
 const bodyTextStyle: CSSProperties = {
-    color: '#6B4C2A',
+    color: '#3A0F0E',
     fontFamily: fontBody,
     fontSize: '14px',
     fontWeight: 400,
@@ -105,7 +105,7 @@ const bodyTextStyle: CSSProperties = {
 };
 
 const quoteTextStyle: CSSProperties = {
-    color: '#3D2A14',
+    color: '#3A0F0E',
     fontFamily: fontDisplay,
     fontSize: '20px',
     fontStyle: 'italic',
@@ -114,7 +114,7 @@ const quoteTextStyle: CSSProperties = {
 };
 
 const accentMarkStyle: CSSProperties = {
-    background: '#8B2020',
+    background: '#3A0F0E',
 };
 
 export default async function HomePage() {
@@ -127,7 +127,7 @@ export default async function HomePage() {
       <div>
         <header aria-label="Navegacion principal">
           <Link href="/" style={navTextStyle}>
-            <span style={{ color: '#8B2020' }}>SL</span>
+            <span style={{ color: '#3A0F0E' }}>SL</span>
             <span>
               <span style={brandNameStyle}>San Lorenzo</span>
               <span style={brandMetaStyle}>Estatuas Vivas</span>
