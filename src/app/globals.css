@@ -66,14 +66,7 @@ body::-webkit-scrollbar {
 body {
   min-height: 100vh;
   overflow-x: hidden;
-  background:
-    linear-gradient(rgba(245, 237, 216, 0.86), rgba(245, 237, 216, 0.91)),
-    var(--canvas-bg-image),
-    #F5EDD8;
-  background-attachment: scroll;
-  background-position: center top;
-  background-repeat: repeat;
-  background-size: auto, 1600px auto, auto;
+  background: #F5EDD8;
 }
 
 a {
@@ -113,7 +106,7 @@ p {
 }
 
 .paper-bg {
-  background: transparent;
+  background: #F5EDD8;
 }
 
 .display-italic {
