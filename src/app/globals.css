@@ -33,6 +33,7 @@
   --brown-soft: #9B7A4B;
   --border: #4C4032;
   --border-dark: #9B7A4B;
+  --canvas-bg-image: url('/images/backgrounds/paper-canvas-final.png');
   --font-display: var(--font-playfair), 'Playfair Display', Georgia, serif;
   --font-body: var(--font-inter), 'Inter', system-ui, sans-serif;
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -66,11 +67,12 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background:
-    radial-gradient(circle at 18% 0%, rgba(143, 36, 28, 0.14), transparent 28rem),
-    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(255,255,255,0.028) 1px, transparent 1px),
-    var(--bg);
-  background-size: auto, 260px 100%, 100% 220px, auto;
+    linear-gradient(rgba(245, 237, 216, 0.74), rgba(245, 237, 216, 0.82)),
+    var(--canvas-bg-image),
+    #F5EDD8;
+  background-attachment: scroll, fixed, scroll;
+  background-position: center, center, center;
+  background-size: auto, cover, auto;
 }
 
 a {
@@ -110,10 +112,10 @@ p {
 }
 
 .paper-bg {
-  background-color: var(--bg);
+  background-color: #F5EDD8;
   background-image:
-    linear-gradient(rgba(20, 19, 18, 0.92), rgba(20, 19, 18, 0.92)),
-    url('/assets/Lienzo%20de%20fondo.png'),
+    linear-gradient(rgba(245, 237, 216, 0.68), rgba(245, 237, 216, 0.82)),
+    var(--canvas-bg-image),
     linear-gradient(90deg, rgba(244, 233, 214, 0.055) 1px, transparent 1px),
     radial-gradient(rgba(196, 164, 109, 0.055) 1px, transparent 1.5px),
     radial-gradient(rgba(0, 0, 0, 0.22) 1px, transparent 1px);
@@ -424,8 +426,8 @@ p {
 
 .home-bg {
   background:
-    linear-gradient(rgba(245, 237, 216, 0.16), rgba(13, 13, 13, 0.34)),
-    url('/assets/Lienzo%20de%20fondo.png'),
+    linear-gradient(rgba(245, 237, 216, 0.22), rgba(13, 13, 13, 0.28)),
+    var(--canvas-bg-image),
     #F5EDD8;
   background-attachment: fixed;
   background-position: center;
@@ -440,7 +442,7 @@ p {
     linear-gradient(90deg, rgba(28, 16, 8, 0.08) 1px, transparent 1px),
     radial-gradient(circle at 72% 18%, rgba(28, 16, 8, 0.12), transparent 22rem),
     linear-gradient(180deg, rgba(13, 13, 13, 0.52) 0%, rgba(13, 13, 13, 0.66) 42%, rgba(13, 13, 13, 0.78) 100%),
-    url('/assets/Lienzo%20de%20fondo.png'),
+    var(--canvas-bg-image),
     #F5EDD8;
   background-position: 0 0, center, center, center, center;
   background-size: 295px 100%, auto, auto, cover, auto;
@@ -1240,7 +1242,7 @@ p {
   background-color: #efe1c7;
   background-image:
     linear-gradient(rgba(239, 225, 199, 0.84), rgba(239, 225, 199, 0.84)),
-    url('/assets/Lienzo%20de%20fondo.png');
+    var(--canvas-bg-image);
   background-position: center;
   background-size: cover;
 }
