@@ -104,6 +104,18 @@ const bodyTextStyle: CSSProperties = {
     lineHeight: 1.7,
 };
 
+const cardCtaStyle: CSSProperties = {
+    color: '#3A0F0E',
+    display: 'inline-flex',
+    fontFamily: fontBody,
+    fontSize: '10px',
+    fontWeight: 500,
+    gap: '10px',
+    letterSpacing: '0.22em',
+    marginTop: '14px',
+    textTransform: 'uppercase',
+};
+
 const quoteTextStyle: CSSProperties = {
     color: '#3A0F0E',
     fontFamily: fontDisplay,
@@ -167,6 +179,9 @@ export default async function HomePage() {
                 <p style={labelStyle}>{estatua.subtitulo}</p>
                 <h3 style={cardTitleStyle}>{estatua.nombre}</h3>
                 <span style={bodyTextStyle}>{estatua.frase}</span>
+                <span style={cardCtaStyle}>
+                  Ver mas <span aria-hidden="true">-&gt;</span>
+                </span>
               </Link>))}
           </div>
         </section>
