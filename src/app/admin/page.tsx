@@ -1,122 +1,90 @@
-import Link from 'next/link'
-import { getAdminDashboardData } from '@/lib/supabase/queries'
-
-export const dynamic = 'force-dynamic'
-
+import Link from 'next/link';
+import { getAdminDashboardData } from '@/lib/supabase/queries';
+export const dynamic = 'force-dynamic';
 export default async function AdminDashboard() {
-  const { estatuas, totalImagenes, totalVisitas } = await getAdminDashboardData()
-
-  const metricas = [
-    { numero: totalVisitas.toLocaleString('es-AR'), label: 'Visitas QR', delta: '+18% vs julio' },
-    { numero: String(totalImagenes).padStart(2, '0'), label: 'Fotos', delta: '+12 este mes' },
-    { numero: String(estatuas.length).padStart(2, '0'), label: 'Estatuas', delta: '2 fichas activas' },
-  ]
-
-  return (
-    <div>
-      <header
-        style={{
-          alignItems: 'center',
-          borderBottom: '0.5px solid var(--border)',
-          display: 'flex',
-          justifyContent: 'space-between',
-          padding: '26px 40px',
-        }}
-      >
+    const { estatuas, totalImagenes, totalVisitas } = await getAdminDashboardData();
+    const metricas = [
+        { numero: totalVisitas.toLocaleString('es-AR'), label: 'Visitas QR', delta: '+18% vs julio' },
+        { numero: String(totalImagenes).padStart(2, '0'), label: 'Fotos', delta: '+12 este mes' },
+        { numero: String(estatuas.length).padStart(2, '0'), label: 'Estatuas', delta: '2 fichas activas' },
+    ];
+    return (<div>
+      <header>
         <div>
-          <p className="editorial-lbl" style={{ alignItems: 'center', display: 'inline-flex', gap: '12px' }}>
-            <span style={{ background: 'var(--red)', height: '0.5px', width: '24px' }} />
+          <p>
+            <span />
             Panel principal
           </p>
-          <h1 style={{ fontSize: '36px', marginTop: '14px' }}>Buen día, Marina.</h1>
+          <h1>Buen día, Marina.</h1>
         </div>
-        <div style={{ display: 'flex', gap: '12px' }}>
-          <Link className="btn-outline-red" href="/admin/pagina-principal">Editar Home</Link>
-          <Link className="btn-red" href="/admin/estatuas">Ver estatuas</Link>
+        <div>
+          <Link href="/admin/pagina-principal">Editar Home</Link>
+          <Link href="/admin/estatuas">Ver estatuas</Link>
         </div>
       </header>
 
-      <section
-        style={{
-          borderBottom: '0.5px solid var(--border)',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-        }}
-      >
-        {metricas.map((metrica, index) => (
-          <article
-            key={metrica.label}
-            style={{
-              borderRight: index < metricas.length - 1 ? '0.5px solid var(--border)' : 'none',
-              padding: '36px 40px',
-            }}
-          >
-            <p className="editorial-lbl" style={{ alignItems: 'center', display: 'inline-flex', gap: '10px', marginBottom: '18px' }}>
-              <span style={{ background: 'var(--red)', height: '0.5px', width: '16px' }} />
+      <section>
+        {metricas.map((metrica, index) => (<article key={metrica.label}>
+            <p>
+              <span />
               {metrica.label}
             </p>
-            <p style={{ color: 'var(--red)', fontFamily: 'var(--font-display)', fontSize: '64px', fontStyle: 'italic', lineHeight: 1 }}>
+            <p>
               {metrica.numero}
             </p>
-            <p style={{ color: 'var(--ink-4)', fontSize: '10px', letterSpacing: '0.05em', marginTop: '14px' }}>{metrica.delta}</p>
-          </article>
-        ))}
+            <p>{metrica.delta}</p>
+          </article>))}
       </section>
 
-      <section style={{ padding: '40px 40px 48px' }}>
-        <div style={{ alignItems: 'baseline', display: 'flex', justifyContent: 'space-between', marginBottom: '28px' }}>
+      <section>
+        <div>
           <div>
-            <p className="editorial-lbl" style={{ alignItems: 'center', display: 'inline-flex', gap: '10px', marginBottom: '14px' }}>
-              <span style={{ background: 'var(--red)', height: '0.5px', width: '24px' }} />
+            <p>
+              <span />
               Las estatuas del pueblo
             </p>
-            <h2 style={{ fontSize: '28px' }}>Catálogo · /{String(estatuas.length).padStart(2, '0')} fichas</h2>
+            <h2>Catálogo · /{String(estatuas.length).padStart(2, '0')} fichas</h2>
           </div>
-          <div className="editorial-lbl" style={{ display: 'flex', gap: '18px', fontSize: '8px' }}>
-            <span style={{ borderBottom: '0.5px solid var(--red)', color: 'var(--red)', paddingBottom: '4px' }}>Todas</span>
+          <div>
+            <span>Todas</span>
             <span>Activas</span>
             <span>Borrador</span>
           </div>
         </div>
 
-        <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+        <table>
           <thead>
-            <tr style={{ borderBottom: '0.5px solid var(--border)', borderTop: '0.5px solid var(--border)' }}>
-              {['/', 'Estatua', 'Subtítulo', 'Capítulos', 'Visitas QR', 'Última edición', 'Estado', 'Acciones'].map((heading) => (
-                <th key={heading} className="editorial-lbl" style={{ fontSize: '8px', fontWeight: 500, padding: '14px 8px', textAlign: 'left' }}>
+            <tr>
+              {['/', 'Estatua', 'Subtítulo', 'Capítulos', 'Visitas QR', 'Última edición', 'Estado', 'Acciones'].map((heading) => (<th key={heading}>
                   {heading}
-                </th>
-              ))}
+                </th>))}
             </tr>
           </thead>
           <tbody>
-            {estatuas.map((estatua, index) => (
-              <tr key={estatua.id} style={{ borderBottom: '0.5px solid var(--border)' }}>
-                <td style={{ color: 'var(--red)', fontFamily: 'var(--font-display)', fontSize: '16px', fontStyle: 'italic', padding: '22px 8px' }}>
+            {estatuas.map((estatua, index) => (<tr key={estatua.id}>
+                <td>
                   /{index + 1 === 1 ? 'I' : 'II'}
                 </td>
-                <td style={{ padding: '22px 8px' }}>
-                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontStyle: 'italic' }}>{estatua.nombre}</span>
+                <td>
+                  <span>{estatua.nombre}</span>
                 </td>
-                <td style={{ color: 'var(--ink-3)', fontSize: '11px', padding: '22px 8px' }}>{estatua.subtitulo}</td>
-                <td style={{ fontFamily: 'var(--font-display)', fontSize: '18px', fontStyle: 'italic', padding: '22px 8px' }}>{estatua.capitulos.length}</td>
-                <td style={{ fontFamily: 'var(--font-display)', fontSize: '18px', fontStyle: 'italic', padding: '22px 8px' }}>{estatua.visitas}</td>
-                <td style={{ color: 'var(--ink-4)', fontSize: '10px', padding: '22px 8px' }}>Hace {index === 0 ? 2 : 8} días</td>
-                <td style={{ padding: '22px 8px' }}>
-                  <span className="editorial-lbl" style={{ alignItems: 'center', color: 'var(--red)', display: 'inline-flex', fontSize: '8px', gap: '8px' }}>
-                    <span style={{ background: 'var(--red)', height: '5px', width: '5px' }} />
+                <td>{estatua.subtitulo}</td>
+                <td>{estatua.capitulos.length}</td>
+                <td>{estatua.visitas}</td>
+                <td>Hace {index === 0 ? 2 : 8} días</td>
+                <td>
+                  <span>
+                    <span />
                     {estatua.activa ? 'Activa' : 'Borrador'}
                   </span>
                 </td>
-                <td className="editorial-lbl" style={{ color: 'var(--brown)', fontSize: '9px', padding: '22px 8px' }}>
-                  <Link href={`/admin/estatuas/${estatua.slug}`} style={{ color: 'var(--red)' }}>Editar</Link>
-                  <span style={{ color: 'var(--ink-4)', marginLeft: '16px' }}>Archivar</span>
+                <td>
+                  <Link href={`/admin/estatuas/${estatua.slug}`}>Editar</Link>
+                  <span>Archivar</span>
                 </td>
-              </tr>
-            ))}
+              </tr>))}
           </tbody>
         </table>
       </section>
-    </div>
-  )
+    </div>);
 }

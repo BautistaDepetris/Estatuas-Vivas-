@@ -1,104 +1,41 @@
-import Link from 'next/link'
-import { Estatua } from '@/types'
-import Butterfly from './Butterfly'
-import HeroLivingVideo from './HeroLivingVideo'
-
+import Link from 'next/link';
+import { Estatua } from '@/types';
+import Butterfly from './Butterfly';
+import HeroLivingVideo from './HeroLivingVideo';
 interface HeroSectionProps {
-  estatua: Estatua
+    estatua: Estatua;
 }
-
 export default function HeroSection({ estatua }: HeroSectionProps) {
-  const imagen = estatua.imagenes[0]
-  const partesSubtitulo = estatua.subtitulo.split('·').map((parte) => parte.trim())
-  const kicker = partesSubtitulo[0] || estatua.subtitulo
-  const detalle = partesSubtitulo.slice(1).join(' · ')
-  const videoSrc = `/videos/${estatua.slug}.mp4`
-
-  return (
-    <section style={{ height: '100vh', minHeight: '680px', position: 'relative', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', inset: 0 }}>
-        <HeroLivingVideo
-          src={videoSrc}
-          fallbackSrc={imagen?.url}
-          fallbackAlt={imagen?.titulo ?? estatua.nombre}
-        />
+    const imagen = estatua.imagenes[0];
+    const partesSubtitulo = estatua.subtitulo.split('·').map((parte) => parte.trim());
+    const kicker = partesSubtitulo[0] || estatua.subtitulo;
+    const detalle = partesSubtitulo.slice(1).join(' · ');
+    const videoSrc = `/videos/${estatua.slug}.mp4`;
+    return (<section>
+      <div>
+        <HeroLivingVideo src={videoSrc} fallbackSrc={imagen?.url} fallbackAlt={imagen?.titulo ?? estatua.nombre}/>
       </div>
-      <div
-        style={{
-          background: 'linear-gradient(90deg, rgba(9,9,8,0.86) 0%, rgba(9,9,8,0.48) 44%, rgba(9,9,8,0.18) 100%), linear-gradient(180deg, rgba(9,9,8,0.08) 0%, rgba(9,9,8,0.18) 56%, var(--bg) 96%)',
-          inset: 0,
-          pointerEvents: 'none',
-          position: 'absolute',
-        }}
-      />
-      <Link
-        aria-label="Volver al inicio"
-        href="/"
-        style={{
-          alignItems: 'center',
-          backdropFilter: 'blur(8px)',
-          background: 'rgba(9,9,8,0.72)',
-          border: '0.5px solid rgba(239,227,203,0.22)',
-          color: 'var(--ink)',
-          display: 'inline-flex',
-          height: '36px',
-          justifyContent: 'center',
-          position: 'absolute',
-          right: '22px',
-          top: '50px',
-          width: '36px',
-          zIndex: 5,
-        }}
-      >
+      <div />
+      <Link aria-label="Volver al inicio" href="/">
         ×
       </Link>
-      <Link
-        href="/"
-        style={{
-          alignItems: 'center',
-          background: 'rgba(9,9,8,0.74)',
-          border: '0.5px solid rgba(200,163,109,0.55)',
-          color: 'var(--ink)',
-          display: 'inline-flex',
-          fontSize: '10px',
-          fontWeight: 500,
-          gap: '8px',
-          left: '26px',
-          letterSpacing: '0.16em',
-          padding: '10px 14px',
-          position: 'absolute',
-          textTransform: 'uppercase',
-          top: '50px',
-          zIndex: 5,
-        }}
-      >
+      <Link href="/">
         ← Volver al inicio
       </Link>
-      <div style={{ bottom: '32px', left: '26px', position: 'absolute', right: '26px', zIndex: 5 }}>
-        <p className="editorial-lbl" style={{ marginBottom: '14px' }}>
+      <div>
+        <p>
           {kicker}
         </p>
-        <h1 style={{ color: 'var(--red)', fontSize: '64px', lineHeight: 0.9 }}>
-          {estatua.nombre.split(' ').map((part) => (
-            <span key={part}>
+        <h1>
+          {estatua.nombre.split(' ').map((part) => (<span key={part}>
               {part}
               <br />
-            </span>
-          ))}
+            </span>))}
         </h1>
-        <p
-          style={{
-            color: 'var(--brown)',
-            fontSize: '10px',
-            letterSpacing: '0.18em',
-            marginTop: '16px',
-            textTransform: 'uppercase',
-          }}
-        >
+        <p>
           {detalle || estatua.nombre}
         </p>
       </div>
-      <Butterfly color="var(--red)" size={18} style={{ left: '28px', position: 'absolute', top: '130px', zIndex: 4 }} />
-    </section>
-  )
+      <Butterfly />
+    </section>);
 }
