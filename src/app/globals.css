@@ -67,12 +67,13 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background:
-    linear-gradient(rgba(245, 237, 216, 0.74), rgba(245, 237, 216, 0.82)),
+    linear-gradient(rgba(245, 237, 216, 0.86), rgba(245, 237, 216, 0.91)),
     var(--canvas-bg-image),
     #F5EDD8;
-  background-attachment: scroll, fixed, scroll;
-  background-position: center, center, center;
-  background-size: auto, cover, auto;
+  background-attachment: scroll;
+  background-position: center top;
+  background-repeat: repeat;
+  background-size: auto, 1600px auto, auto;
 }
 
 a {
@@ -112,15 +113,7 @@ p {
 }
 
 .paper-bg {
-  background-color: #F5EDD8;
-  background-image:
-    linear-gradient(rgba(245, 237, 216, 0.68), rgba(245, 237, 216, 0.82)),
-    var(--canvas-bg-image),
-    linear-gradient(90deg, rgba(244, 233, 214, 0.055) 1px, transparent 1px),
-    radial-gradient(rgba(196, 164, 109, 0.055) 1px, transparent 1.5px),
-    radial-gradient(rgba(0, 0, 0, 0.22) 1px, transparent 1px);
-  background-position: center, center, 0 0, 0 0, 3px 3px;
-  background-size: auto, cover, 260px 100%, 7px 7px, 13px 13px;
+  background: transparent;
 }
 
 .display-italic {
@@ -425,13 +418,7 @@ p {
 }
 
 .home-bg {
-  background:
-    linear-gradient(rgba(245, 237, 216, 0.22), rgba(13, 13, 13, 0.28)),
-    var(--canvas-bg-image),
-    #F5EDD8;
-  background-attachment: fixed;
-  background-position: center;
-  background-size: cover;
+  background: transparent;
   color: #F5EDD8;
   min-height: 100vh;
   padding: 0;
@@ -441,11 +428,9 @@ p {
   background:
     linear-gradient(90deg, rgba(28, 16, 8, 0.08) 1px, transparent 1px),
     radial-gradient(circle at 72% 18%, rgba(28, 16, 8, 0.12), transparent 22rem),
-    linear-gradient(180deg, rgba(13, 13, 13, 0.52) 0%, rgba(13, 13, 13, 0.66) 42%, rgba(13, 13, 13, 0.78) 100%),
-    var(--canvas-bg-image),
-    #F5EDD8;
-  background-position: 0 0, center, center, center, center;
-  background-size: 295px 100%, auto, auto, cover, auto;
+    linear-gradient(180deg, rgba(13, 13, 13, 0.5) 0%, rgba(13, 13, 13, 0.62) 42%, rgba(13, 13, 13, 0.72) 100%);
+  background-position: 0 0, center, center;
+  background-size: 295px 100%, auto, auto;
   border: 1px solid rgba(245, 237, 216, 0.1);
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.62);
   margin: 0 auto;
@@ -1240,11 +1225,7 @@ p {
 
 .sv-paper-section {
   background-color: #efe1c7;
-  background-image:
-    linear-gradient(rgba(239, 225, 199, 0.84), rgba(239, 225, 199, 0.84)),
-    var(--canvas-bg-image);
-  background-position: center;
-  background-size: cover;
+  background-image: none;
 }
 
 .sv-paper-section .sv-section-heading h2 {
