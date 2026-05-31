@@ -20,7 +20,13 @@ export default async function HomePage() {
         getGaleriaPublica(),
         getLugaresPueblo(),
     ]);
-    return (<main>
+    return (<main style={{
+            backgroundImage: "url('/assets/fondo-landing.png.png')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+            minHeight: '100vh',
+        }}>
       <div>
         <header aria-label="Navegacion principal">
           <Link href="/">
