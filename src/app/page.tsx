@@ -21,7 +21,7 @@ export default async function HomePage() {
         getLugaresPueblo(),
     ]);
     return (<main style={{
-            backgroundImage: "url('/assets/fondo-landing.png.png')",
+            backgroundImage: "url('/assets/fondo-vertical-.png')",
             backgroundSize: 'cover',
             backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
