@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import type { CSSProperties } from 'react';
 import ArchiveGrid from '@/components/editorial/ArchiveGrid';
+import EditorialImageCard from '@/components/editorial/EditorialImageCard';
 import MuseumFeatureCard from '@/components/editorial/MuseumFeatureCard';
-import OrnamentalFrame from '@/components/editorial/OrnamentalFrame';
 import PlaceEditorialCard from '@/components/editorial/PlaceEditorialCard';
 import { getGaleriaPublica, getLugaresPueblo, getTodasEstatuas } from '@/lib/supabase/queries';
 export const dynamic = 'force-dynamic';
@@ -86,36 +86,6 @@ const sectionTitleStyle: CSSProperties = {
     lineHeight: 0.95,
 };
 
-const cardTitleStyle: CSSProperties = {
-    color: '#3A0F0E',
-    fontFamily: fontDisplay,
-    fontSize: 'clamp(24px, 5vw, 34px)',
-    fontStyle: 'italic',
-    fontWeight: 400,
-    letterSpacing: '-0.02em',
-    lineHeight: 1,
-};
-
-const bodyTextStyle: CSSProperties = {
-    color: '#3A0F0E',
-    fontFamily: fontBody,
-    fontSize: '14px',
-    fontWeight: 400,
-    lineHeight: 1.7,
-};
-
-const cardCtaStyle: CSSProperties = {
-    color: '#3A0F0E',
-    display: 'inline-flex',
-    fontFamily: fontBody,
-    fontSize: '10px',
-    fontWeight: 500,
-    gap: '10px',
-    letterSpacing: '0.22em',
-    marginTop: '14px',
-    textTransform: 'uppercase',
-};
-
 const quoteTextStyle: CSSProperties = {
     color: '#3A0F0E',
     fontFamily: fontDisplay,
@@ -174,15 +144,17 @@ export default async function HomePage() {
             <h2 style={sectionTitleStyle}>Historias que esperan ser escuchadas.</h2>
           </div>
           <div>
-            {estatuas.map((estatua) => (<Link href={`/estatuas/${estatua.slug}`} key={estatua.id}>
-                <OrnamentalFrame alt={estatua.nombre} aspectRatio="16 / 10.4" src={estatua.imagenes[0]?.url} variant="sides"/>
-                <p style={labelStyle}>{estatua.subtitulo}</p>
-                <h3 style={cardTitleStyle}>{estatua.nombre}</h3>
-                <span style={bodyTextStyle}>{estatua.frase}</span>
-                <span style={cardCtaStyle}>
-                  Ver mas <span aria-hidden="true">-&gt;</span>
-                </span>
-              </Link>))}
+            {estatuas.map((estatua) => (<EditorialImageCard
+                alt={estatua.nombre}
+                ctaLabel="Ver mas"
+                descripcion={estatua.frase}
+                href={`/estatuas/${estatua.slug}`}
+                imageHeight={200}
+                imageUrl={estatua.imagenes[0]?.url}
+                key={estatua.id}
+                kicker={estatua.subtitulo}
+                titulo={estatua.nombre}
+              />))}
           </div>
         </section>
 

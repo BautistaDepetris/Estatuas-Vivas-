@@ -1,6 +1,4 @@
-import Link from 'next/link'
-import type { CSSProperties } from 'react'
-import OrnamentalFrame from './OrnamentalFrame'
+import EditorialImageCard from './EditorialImageCard'
 
 interface MuseumFeatureCardProps {
   actionHref?: string
@@ -10,46 +8,6 @@ interface MuseumFeatureCardProps {
   frameVariant?: 'full' | 'sides' | 'horizontal'
   imageUrl?: string | null
   titulo: string
-}
-
-const fontDisplay = "'Playfair Display', Georgia, serif"
-const fontBody = "'Inter', system-ui, -apple-system, sans-serif"
-
-const labelStyle: CSSProperties = {
-  color: '#3A0F0E',
-  fontFamily: fontBody,
-  fontSize: '9px',
-  fontWeight: 500,
-  letterSpacing: '0.28em',
-  lineHeight: 1.4,
-  textTransform: 'uppercase',
-}
-
-const titleStyle: CSSProperties = {
-  color: '#3A0F0E',
-  fontFamily: fontDisplay,
-  fontSize: 'clamp(26px, 6vw, 38px)',
-  fontStyle: 'italic',
-  fontWeight: 400,
-  letterSpacing: '-0.02em',
-  lineHeight: 1,
-}
-
-const bodyStyle: CSSProperties = {
-  color: '#3A0F0E',
-  fontFamily: fontBody,
-  fontSize: '14px',
-  fontWeight: 400,
-  lineHeight: 1.7,
-}
-
-const actionStyle: CSSProperties = {
-  color: '#3A0F0E',
-  fontFamily: fontBody,
-  fontSize: '10px',
-  fontWeight: 500,
-  letterSpacing: '0.22em',
-  textTransform: 'uppercase',
 }
 
 export default function MuseumFeatureCard({
@@ -62,19 +20,15 @@ export default function MuseumFeatureCard({
   titulo,
 }: MuseumFeatureCardProps) {
   return (
-    <article>
-      <OrnamentalFrame alt={titulo} src={imageUrl} variant={frameVariant} />
-      <div>
-        {categoria && <p style={labelStyle}>{categoria}</p>}
-        <h3 style={titleStyle}>{titulo}</h3>
-        {descripcion && <p style={bodyStyle}>{descripcion}</p>}
-      </div>
-      {actionHref && (
-        <Link href={actionHref} style={actionStyle}>
-          <span>{actionLabel}</span>
-          <span aria-hidden="true">-&gt;</span>
-        </Link>
-      )}
-    </article>
+    <EditorialImageCard
+      alt={titulo}
+      ctaLabel={actionHref ? actionLabel : undefined}
+      descripcion={descripcion}
+      href={actionHref}
+      imageHeight={frameVariant === 'full' ? 200 : 140}
+      imageUrl={imageUrl}
+      kicker={categoria}
+      titulo={titulo}
+    />
   )
 }
