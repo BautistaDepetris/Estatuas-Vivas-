@@ -25,7 +25,16 @@ export default async function HomePage() {
   ])
 
   return (
-    <main className="home-bg">
+    <main
+      className="home-bg"
+      style={{
+        backgroundImage: "url('/assets/fondo-landing.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center center",
+        backgroundRepeat: "no-repeat",
+        minHeight: "100vh",
+      }}
+    >
       <div className="home-shell">
         <header className="home-header" aria-label="Navegacion principal">
           <Link className="home-brand" href="/">
