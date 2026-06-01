@@ -1,0 +1,75 @@
+/* ============================================================
+   BotonesAudio.css — Reproductores de audio (3 pistas/estatua)
+   Fiel al diseño "San Lorenzo". CSS plano (NO Tailwind).
+   Estados: idle / playing (glyph pausa + ecualizador + progreso).
+   ============================================================ */
+
+/* Glyphs de play / pausa (CSS puro, color = currentColor) */
+.ico{display:inline-block;}
+.tri{width:0;height:0;border-style:solid;border-width:7px 0 7px 12px;border-color:transparent transparent transparent currentColor;margin-left:2px;}
+.pause{display:flex;gap:4px;}
+.pause i{width:3.5px;height:14px;background:currentColor;display:block;}
+
+/* ---- 01 · Play principal (hero) ---- */
+.hero{display:flex;align-items:center;gap:16px;padding:18px;background:#141210;border:1px solid rgba(201,162,76,.18);}
+.hero .big{
+  width:64px;height:64px;border-radius:50%;flex:0 0 auto;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;color:#F5EDD8;
+  background:#3A0F0E;border:1px solid rgba(201,162,76,.35);
+  transition:transform .18s ease,background .2s ease;position:relative;
+}
+.hero .big:hover{background:#5A1A1F;transform:scale(1.04);}
+.hero .big.playing{background:#241008;}            /* estado reproduciendo */
+.hero .meta .k{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#caa24f;font-weight:600;}
+.hero .meta .ti{font-family:'Playfair Display', Georgia, serif;font-style:italic;font-size:21px;color:#F5EDD8;margin-top:3px;}
+.hero .meta .du{font-family:'JetBrains Mono', ui-monospace, monospace;font-size:11px;color:rgba(245,237,216,.45);margin-top:6px;}
+
+/* ---- 02 · Lista de las 3 pistas ---- */
+.tracks{display:flex;flex-direction:column;border:1px solid rgba(245,237,216,.1);}
+.track{
+  display:flex;align-items:center;gap:14px;padding:15px 14px;cursor:pointer;
+  background:#121110;border-bottom:1px solid rgba(245,237,216,.07);
+  transition:background .2s ease;position:relative;overflow:hidden;
+}
+.track:last-child{border-bottom:none;}
+.track:hover{background:#171513;}
+.track.active{background:#1a120c;}                  /* pista activa */
+.track .btn{
+  width:42px;height:42px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+  color:#e9cf86;border:1px solid transparent;transition:color .2s ease,background .2s ease;
+  background-image:linear-gradient(#15100a,#15100a),linear-gradient(180deg,#7a5a22 0%,#caa24f 22%,#f3e2a6 50%,#c69a40 75%,#6e4d1c 100%);
+  background-origin:border-box;background-clip:padding-box,border-box;
+}
+.track.active .btn{background-image:none;background:#3A0F0E;color:#F5EDD8;border:1px solid rgba(201,162,76,.3);}
+.track .info{flex:1;min-width:0;}
+.track .info .ti{font-size:14px;font-weight:500;color:#F5EDD8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.track .info .sub{font-size:11px;color:rgba(245,237,216,.45);margin-top:3px;letter-spacing:.02em;}
+.track .dur{font-family:'JetBrains Mono', ui-monospace, monospace;font-size:11px;color:rgba(245,237,216,.4);flex:0 0 auto;}
+.track.active .dur{color:#caa24f;}
+
+/* Ecualizador animado (solo en pista activa) */
+.eq{display:none;align-items:flex-end;gap:3px;height:16px;}
+.track.active .eq{display:flex;}
+.track.active .info .sub{display:none;}
+.eq i{width:3px;background:#caa24f;display:block;animation:bounce 900ms ease-in-out infinite;}
+.eq i:nth-child(1){animation-delay:0ms;}
+.eq i:nth-child(2){animation-delay:150ms;}
+.eq i:nth-child(3){animation-delay:300ms;}
+.eq i:nth-child(4){animation-delay:80ms;}
+.eq i:nth-child(5){animation-delay:240ms;}
+@keyframes bounce{0%,100%{height:4px;}50%{height:16px;}}
+
+/* Barra de progreso al pie de la pista activa */
+.prog{position:absolute;left:0;bottom:0;height:2px;width:0;background:#caa24f;transition:width .25s linear;}
+
+/* ---- 03 · Píldoras compactas ---- */
+.pills{display:flex;flex-wrap:wrap;gap:10px;}
+.pill{
+  display:inline-flex;align-items:center;gap:9px;padding:9px 15px 9px 11px;cursor:pointer;
+  color:#F5EDD8;font-size:12px;font-weight:500;border:1px solid transparent;
+  background-image:linear-gradient(#15100a,#15100a),linear-gradient(180deg,#7a5a22 0%,#caa24f 22%,#f3e2a6 50%,#c69a40 75%,#6e4d1c 100%);
+  background-origin:border-box;background-clip:padding-box,border-box;transition:color .2s;
+}
+.pill .dot{width:22px;height:22px;border-radius:50%;background:#3A0F0E;display:flex;align-items:center;justify-content:center;color:#F5EDD8;}
+.pill .dot .tri{border-width:5px 0 5px 8px;margin-left:1px;}
+.pill:hover{color:#e9cf86;}

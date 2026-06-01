@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { AudioTracks } from '@/components/BotonesAudio';
 import AudioPlayer from '@/components/estatua/AudioPlayer';
-import AudioTrackCard from '@/components/estatua/AudioTrackCard';
 import EditorialNum from '@/components/estatua/EditorialNum';
 import HeroSection from '@/components/estatua/HeroSection';
 import ImageGallery from '@/components/estatua/ImageGallery';
@@ -55,9 +55,13 @@ export default async function EstatuaPage({ params }: PageProps) {
           <br />
           narrada.
         </h2>
-        <div>
-          {audioTracks.map((track, index) => (<AudioTrackCard key={track} titulo={track} descripcion={`Placeholder de audio para ${estatua.nombre}. El track final se conectará cuando esté disponible.`} index={index}/>))}
-        </div>
+        <AudioTracks
+          tracks={audioTracks.map((track) => ({
+            titulo: track,
+            sub: `Placeholder de audio para ${estatua.nombre}. El track final se conectará cuando esté disponible.`,
+            duracion: '02:14',
+          }))}
+        />
       </section>
 
       <section>

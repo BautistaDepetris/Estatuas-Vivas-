@@ -1,0 +1,69 @@
+/* ============================================================
+   BotonVolver.css — Botones "Volver atrás" (8 variantes)
+   Fiel al diseño "San Lorenzo". CSS plano (NO Tailwind).
+   Estados: hover (flecha se desplaza ←), active en sólidos.
+   Nota: el filete dorado se logra con doble background sobre
+   border-box (no necesita imágenes).
+   ============================================================ */
+
+/* Etiqueta UPPER reutilizada por varios botones */
+.lbl{font-weight:600;letter-spacing:.15em;text-transform:uppercase;font-size:11px;}
+
+/* ---- 01 · Ghost (texto + flecha) ---- */
+.b-ghost{display:inline-flex;align-items:center;gap:10px;background:none;border:none;color:#F5EDD8;cursor:pointer;padding:6px 2px;text-decoration:none;}
+.b-ghost .arw{display:inline-flex;transition:transform .22s ease;font-size:16px;}
+.b-ghost .lbl{transition:color .2s ease;}
+.b-ghost:hover .arw{transform:translateX(-5px);}
+.b-ghost:hover .lbl{color:#d8a64a;}
+.b-ghost.dark{color:#1C1008;}                 /* 07 · variante sobre papel */
+.b-ghost.dark:hover .lbl{color:#4E1419;}
+
+/* ---- 02 · Barra bordó sólida ---- */
+.b-solid{display:inline-flex;align-items:center;gap:10px;background:#3A0F0E;color:#F5EDD8;border:none;cursor:pointer;padding:13px 20px 13px 16px;text-decoration:none;transition:background .2s ease;}
+.b-solid .arw{font-size:15px;transition:transform .22s ease;}
+.b-solid:hover{background:#5A1A1F;}
+.b-solid:active{background:#2c0b0a;}
+.b-solid:hover .arw{transform:translateX(-4px);}
+
+/* ---- 03 · Contorno con filete dorado ---- */
+.b-outline{
+  position:relative;display:inline-flex;align-items:center;gap:10px;
+  background:#15100a;color:#e9cf86;cursor:pointer;padding:12px 20px 12px 16px;text-decoration:none;
+  border:1px solid transparent;
+  background-image:linear-gradient(#15100a,#15100a),linear-gradient(180deg,#7a5a22 0%,#caa24f 22%,#f3e2a6 50%,#c69a40 75%,#6e4d1c 100%);
+  background-origin:border-box;background-clip:padding-box,border-box;
+  transition:color .2s ease;
+}
+.b-outline .arw{font-size:15px;transition:transform .22s ease;}
+.b-outline:hover{color:#f7e6ad;}
+.b-outline:hover .arw{transform:translateX(-4px);}
+
+/* ---- 04 · Circular ícono (hit target ≥44px) ---- */
+.b-round{
+  width:48px;height:48px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+  cursor:pointer;color:#e9cf86;font-size:18px;border:1px solid transparent;text-decoration:none;
+  background-image:linear-gradient(#15100a,#15100a),linear-gradient(180deg,#7a5a22 0%,#caa24f 22%,#f3e2a6 50%,#c69a40 75%,#6e4d1c 100%);
+  background-origin:border-box;background-clip:padding-box,border-box;
+  transition:transform .22s ease,color .2s ease;
+}
+.b-round:hover{color:#f7e6ad;}
+.b-round .arw{transition:transform .22s ease;}
+.b-round:hover .arw{display:inline-block;transform:translateX(-3px);}
+.b-round.solid{background:#3A0F0E;border:1px solid transparent;color:#F5EDD8;background-image:none;}
+.b-round.solid:hover{background:#5A1A1F;}
+
+/* ---- 05 · Migaja contextual (← Volver a …) ---- */
+.b-crumb{display:inline-flex;align-items:center;gap:9px;background:none;border:none;cursor:pointer;color:rgba(245,237,216,.55);padding:6px 2px;text-decoration:none;}
+.b-crumb .arw{font-size:15px;color:#caa24f;transition:transform .22s ease;}
+.b-crumb .ctx{font-family:'Inter', system-ui, sans-serif;font-size:13px;}
+.b-crumb .ctx b{color:#F5EDD8;font-weight:500;}
+.b-crumb:hover .arw{transform:translateX(-4px);}
+.b-crumb:hover .ctx b{color:#d8a64a;}
+
+/* ---- 06 · Barra de detalle (header full-width) ---- */
+.topbar{width:100%;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(201,162,76,.18);background:#0f0e0d;}
+.topbar .back{display:inline-flex;align-items:center;gap:10px;background:none;border:none;color:#F5EDD8;cursor:pointer;text-decoration:none;}
+.topbar .back .arw{font-size:16px;color:#caa24f;transition:transform .22s ease;}
+.topbar .back:hover .arw{transform:translateX(-4px);}
+.topbar .ttl{font-family:'Playfair Display', Georgia, serif;font-style:italic;font-size:16px;color:#F5EDD8;}
+.topbar .sp{width:24px;}

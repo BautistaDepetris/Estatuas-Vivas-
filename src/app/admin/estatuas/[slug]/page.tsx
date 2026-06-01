@@ -1,6 +1,6 @@
 'use client';
-import Link from 'next/link';
 import { FormEvent, use, useEffect, useMemo, useState } from 'react';
+import BotonVolver from '@/components/BotonVolver';
 import FramedPainting from '@/components/estatua/FramedPainting';
 import { ESTATUAS_MOCK } from '@/lib/data/estatuas-mock';
 import { createClient } from '@/lib/supabase/client';
@@ -346,12 +346,12 @@ export default function AdminEstatuaEditorPage({ params }: AdminEstatuaEditorPag
     if (noEncontrada) {
         return (<section>
         <h1>No encontramos esa estatua.</h1>
-        <Link href="/admin/estatuas">Volver</Link>
+        <BotonVolver variant="solid" label="Volver" href="/admin/estatuas" />
       </section>);
     }
     return (<section>
       <header>
-        <Link href="/admin/estatuas">← Volver a estatuas</Link>
+        <BotonVolver variant="solid" label="Volver a estatuas" href="/admin/estatuas" />
         <h1>{tituloEstatua}</h1>
         <p>{subtituloEstatua}</p>
         {(mensaje || error || cargando) && (<p>
