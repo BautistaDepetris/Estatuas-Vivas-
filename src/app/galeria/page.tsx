@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import ArchiveGrid from '@/components/editorial/ArchiveGrid';
-import MuseumFeatureCard from '@/components/editorial/MuseumFeatureCard';
+import EstatuaHomeCard from '@/components/EstatuaHomeCard';
 import { getGaleriaPublica } from '@/lib/supabase/queries';
 export const dynamic = 'force-dynamic';
 export default async function GaleriaPage() {
@@ -38,8 +37,17 @@ export default async function GaleriaPage() {
 
         <section>
           <div>
-            {imagenes[0] && (<MuseumFeatureCard actionLabel="Archivo historico" categoria={imagenes[0].categoria} descripcion={imagenes[0].descripcion} imageUrl={imagenes[0].url} titulo={imagenes[0].titulo}/>)}
-            <ArchiveGrid items={imagenes.slice(1)}/>
+            {imagenes.map((imagen) => (<EstatuaHomeCard
+                slug={imagen.id}
+                nombre={imagen.titulo}
+                subtitulo={imagen.categoria}
+                descripcion={imagen.descripcion}
+                imagenUrl={imagen.url}
+                imagenAlt={imagen.titulo}
+                ctaLabel="Archivo historico"
+                href="/galeria"
+                key={imagen.id}
+              />))}
           </div>
         </section>
       </div>

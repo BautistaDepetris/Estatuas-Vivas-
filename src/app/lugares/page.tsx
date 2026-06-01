@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import PlaceEditorialCard from '@/components/editorial/PlaceEditorialCard';
+import EstatuaHomeCard from '@/components/EstatuaHomeCard';
 import { getLugaresPueblo } from '@/lib/supabase/queries';
 export const dynamic = 'force-dynamic';
 export default async function LugaresPage() {
@@ -37,7 +37,17 @@ export default async function LugaresPage() {
 
         <section>
           <div>
-            {lugares.map((lugar, index) => (<PlaceEditorialCard categoria={lugar.categoria} descripcion={lugar.descripcion} imageUrl={lugar.imagen_url} index={index} key={lugar.id} nombre={lugar.nombre}/>))}
+            {lugares.map((lugar) => (<EstatuaHomeCard
+                slug={lugar.id}
+                nombre={lugar.nombre}
+                subtitulo={lugar.categoria}
+                descripcion={lugar.descripcion}
+                imagenUrl={lugar.imagen_url ?? undefined}
+                imagenAlt={lugar.nombre}
+                ctaLabel="Ver lugar"
+                href="/lugares"
+                key={lugar.id}
+              />))}
           </div>
         </section>
       </div>
