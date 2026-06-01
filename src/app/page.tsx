@@ -4,6 +4,7 @@ import ArchiveGrid from '@/components/editorial/ArchiveGrid';
 import EditorialImageCard from '@/components/editorial/EditorialImageCard';
 import MuseumFeatureCard from '@/components/editorial/MuseumFeatureCard';
 import PlaceEditorialCard from '@/components/editorial/PlaceEditorialCard';
+import EstatuaHomeCard from '@/components/EstatuaHomeCard';
 import { getGaleriaPublica, getLugaresPueblo, getTodasEstatuas } from '@/lib/supabase/queries';
 export const dynamic = 'force-dynamic';
 const navItems = [
@@ -140,16 +141,16 @@ export default async function HomePage() {
             <h2 style={sectionTitleStyle}>Historias que esperan ser escuchadas.</h2>
           </div>
           <div>
-            {estatuas.map((estatua) => (<EditorialImageCard
-                alt={estatua.nombre}
-                ctaLabel="Ver mas"
-                descripcion={estatua.frase}
+            {estatuas.map((estatua) => (<EstatuaHomeCard
+                slug={estatua.slug}
+                nombre={estatua.nombre}
+                subtitulo={estatua.subtitulo}
+                descripcion={estatua.capitulos?.[0]?.texto?.slice(0, 120) || estatua.frase || ''}
+                imagenUrl={estatua.imagenes?.[0]?.url}
+                imagenAlt={estatua.nombre}
+                ctaLabel="Descubrir"
                 href={`/estatuas/${estatua.slug}`}
-                imageHeight={200}
-                imageUrl={estatua.imagenes[0]?.url}
                 key={estatua.id}
-                kicker={estatua.subtitulo}
-                titulo={estatua.nombre}
               />))}
           </div>
         </section>
