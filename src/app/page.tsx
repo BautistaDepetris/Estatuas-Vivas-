@@ -1,9 +1,5 @@
 import Link from 'next/link';
 import type { CSSProperties } from 'react';
-import ArchiveGrid from '@/components/editorial/ArchiveGrid';
-import EditorialImageCard from '@/components/editorial/EditorialImageCard';
-import MuseumFeatureCard from '@/components/editorial/MuseumFeatureCard';
-import PlaceEditorialCard from '@/components/editorial/PlaceEditorialCard';
 import EstatuaHomeCard from '@/components/EstatuaHomeCard';
 import { getGaleriaPublica, getLugaresPueblo, getTodasEstatuas } from '@/lib/supabase/queries';
 export const dynamic = 'force-dynamic';
@@ -161,8 +157,17 @@ export default async function HomePage() {
             <h2 style={sectionTitleStyle}>Archivo visual del pueblo.</h2>
           </div>
           <div>
-            {imagenesGaleria[0] && (<MuseumFeatureCard actionHref="/galeria" actionLabel="Ver galeria" categoria={imagenesGaleria[0].categoria} descripcion={imagenesGaleria[0].descripcion} imageUrl={imagenesGaleria[0].url} titulo={imagenesGaleria[0].titulo}/>)}
-            <ArchiveGrid items={imagenesGaleria.slice(1, 5)}/>
+            {imagenesGaleria.slice(0, 5).map((imagen) => (<EstatuaHomeCard
+                slug={imagen.id}
+                nombre={imagen.titulo}
+                subtitulo={imagen.categoria}
+                descripcion={imagen.descripcion}
+                imagenUrl={imagen.url}
+                imagenAlt={imagen.titulo}
+                ctaLabel="Ver galeria"
+                href="/galeria"
+                key={imagen.id}
+              />))}
             <Link href="/galeria" style={navTextStyle}>
               Ver galeria completa <span>-&gt;</span>
             </Link>
@@ -175,7 +180,17 @@ export default async function HomePage() {
             <h2 style={sectionTitleStyle}>El pueblo recomienda.</h2>
           </div>
           <div>
-            {lugaresPueblo.slice(0, 4).map((lugar, index) => (<PlaceEditorialCard categoria={lugar.categoria} descripcion={lugar.descripcion} imageUrl={lugar.imagen_url} index={index} key={lugar.id} nombre={lugar.nombre}/>))}
+            {lugaresPueblo.slice(0, 4).map((lugar) => (<EstatuaHomeCard
+                slug={lugar.id}
+                nombre={lugar.nombre}
+                subtitulo={lugar.categoria}
+                descripcion={lugar.descripcion}
+                imagenUrl={lugar.imagen_url ?? undefined}
+                imagenAlt={lugar.nombre}
+                ctaLabel="Ver todos los lugares"
+                href="/lugares"
+                key={lugar.id}
+              />))}
           </div>
           <Link href="/lugares" style={navTextStyle}>
             Ver todos los lugares <span>-&gt;</span>
