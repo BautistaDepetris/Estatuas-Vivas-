@@ -44,3 +44,10 @@ textarea,
 select {
   line-height: 1.7;
 }
+
+.landing-background {
+  background-image: url('/assets/casi final.png');
+  background-repeat: repeat;
+  background-size: 512px 512px;
+  min-height: 100vh;
+}

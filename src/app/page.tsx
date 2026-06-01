@@ -20,10 +20,6 @@ const fontDisplay = "'Playfair Display', Georgia, serif";
 const fontBody = "'Inter', system-ui, -apple-system, sans-serif";
 
 const pageStyle: CSSProperties = {
-    backgroundImage: "url('/assets/casi final.png')",
-    backgroundRepeat: 'repeat',
-    backgroundSize: '512px 512px',
-    minHeight: '100vh',
     color: '#3A0F0E',
     fontFamily: fontBody,
 };
@@ -105,7 +101,7 @@ export default async function HomePage() {
         getGaleriaPublica(),
         getLugaresPueblo(),
     ]);
-    return (<main style={pageStyle}>
+    return (<main className="landing-background" style={pageStyle}>
       <div>
         <header aria-label="Navegacion principal">
           <Link href="/" style={navTextStyle}>

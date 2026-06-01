@@ -43,12 +43,7 @@ export default async function EstatuaPage({ params }: PageProps) {
     if (!estatua)
         notFound();
     const siguiente = await getSiguienteEstatuaPublica(slug);
-    return (<main style={{
-            backgroundImage: "url('/assets/casi final.png')",
-            backgroundRepeat: 'repeat',
-            backgroundSize: '512px 512px',
-            minHeight: '100vh',
-        }}>
+    return (<main className="landing-background">
       <VisitaTracker slug={slug}/>
       <HeroSection estatua={estatua}/>
 

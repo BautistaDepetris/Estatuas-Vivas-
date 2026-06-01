@@ -5,12 +5,7 @@ import { getGaleriaPublica } from '@/lib/supabase/queries';
 export const dynamic = 'force-dynamic';
 export default async function GaleriaPage() {
     const imagenes = await getGaleriaPublica();
-    return (<main style={{
-            backgroundImage: "url('/assets/casi final.png')",
-            backgroundRepeat: 'repeat',
-            backgroundSize: '512px 512px',
-            minHeight: '100vh',
-        }}>
+    return (<main className="landing-background">
       <div>
         <header aria-label="Navegacion principal">
           <Link href="/">
