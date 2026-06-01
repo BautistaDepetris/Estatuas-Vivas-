@@ -1,50 +1,42 @@
-import Link from 'next/link'
-import type { CSSProperties } from 'react'
-import { Estatua } from '@/types'
-import FramedPainting from './FramedPainting'
+import Link from 'next/link';
+import { Estatua } from '@/types';
+import FramedPainting from './FramedPainting';
 
 interface NextStatuaButtonProps {
-  siguiente: Estatua
-}
-
-const ctaStyle: CSSProperties = {
-  color: '#3A0F0E',
-  display: 'inline-flex',
-  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-  fontSize: '10px',
-  fontWeight: 500,
-  gap: '10px',
-  letterSpacing: '0.22em',
-  textTransform: 'uppercase',
+  siguiente: Estatua;
 }
 
 export default function NextStatuaButton({ siguiente }: NextStatuaButtonProps) {
-  const imagen = siguiente.imagenes[0]
+  const imagen = siguiente.imagenes[0];
 
   return (
-    <Link href={`/estatuas/${siguiente.slug}`}>
-      <section>
-        <div>
-          <FramedPainting
-            src={imagen?.url}
-            alt={imagen?.titulo ?? siguiente.nombre}
-            height="100%"
-            tone="ember"
-            fill
-          />
+    <section className="museum-section">
+      <div className="museum-inner">
+        <div className="museum-header">
+          <span className="museum-kicker">/05</span>
+          <span className="museum-header-line" />
+          <span className="museum-label">Continua el recorrido</span>
         </div>
-        <div />
-        <div>
-          <p>Continua el recorrido</p>
-          <div>
-            <h2>{siguiente.nombre}</h2>
+        <Link className="next-statue-card" href={`/estatuas/${siguiente.slug}`}>
+          <div className="next-statue-card__media">
+            <FramedPainting
+              src={imagen?.url}
+              alt={imagen?.titulo ?? siguiente.nombre}
+              height="100%"
+              tone="ember"
+              fill
+            />
           </div>
-          <p>Siguiente punto del recorrido</p>
-          <span style={ctaStyle}>
-            Ver mas <span aria-hidden="true">-&gt;</span>
-          </span>
-        </div>
-      </section>
-    </Link>
-  )
+          <div className="next-statue-card__body">
+            <span className="label c-red">Siguiente estatua</span>
+            <h2>{siguiente.nombre}</h2>
+            <p>Siguiente punto del recorrido</p>
+            <span className="next-statue-card__cta">
+              Ver mas <span aria-hidden="true">-&gt;</span>
+            </span>
+          </div>
+        </Link>
+      </div>
+    </section>
+  );
 }

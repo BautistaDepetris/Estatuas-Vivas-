@@ -1,26 +1,32 @@
 import EstatuaHomeCard from '@/components/EstatuaHomeCard';
 import { EstatuaImagen } from '@/types';
-import EditorialNum from './EditorialNum';
 interface ImageGalleryProps {
     imagenes: EstatuaImagen[];
     nombreEstatua: string;
 }
 export default function ImageGallery({ imagenes, nombreEstatua }: ImageGalleryProps) {
     if (!imagenes.length) {
-        return (<section>
-        <EditorialNum num="03" label="Vida en Archivos"/>
-        <div />
-        <p>
-          Aun no tenemos imagenes para esta estatua.
-        </p>
+        return (<section className="museum-section">
+        <div className="museum-inner">
+          <div className="museum-header">
+            <span className="museum-kicker">/03</span>
+            <span className="museum-header-line" />
+            <span className="museum-label">Vida en Archivos</span>
+          </div>
+          <p>Aun no tenemos imagenes para esta estatua.</p>
+        </div>
       </section>);
     }
-    return (<section>
-      <EditorialNum num="03" label="Vida en Archivos"/>
-      <div />
-      <h2>Vida en Archivos.</h2>
+    return (<section className="museum-section">
+      <div className="museum-inner">
+        <div className="museum-header">
+          <span className="museum-kicker">/03</span>
+          <span className="museum-header-line" />
+          <span className="museum-label">Vida en Archivos</span>
+        </div>
+        <h2 className="museum-title">Vida en Archivos.</h2>
 
-      <div>
+        <div className="horizontal-rail">
         {imagenes.map((imagen, index) => (<EstatuaHomeCard
             slug={`${nombreEstatua}-${index}`}
             nombre={imagen.titulo || nombreEstatua}
@@ -32,6 +38,7 @@ export default function ImageGallery({ imagenes, nombreEstatua }: ImageGalleryPr
             href="#"
             key={`${imagen.url}-${index}`}
           />))}
+        </div>
       </div>
     </section>);
 }
