@@ -91,6 +91,89 @@ label {
   box-shadow: 0 1px 2px rgba(60,40,20,0.25), inset 0 0 0 1px rgba(255,240,200,0.35);
 }
 
+.home-header {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 26px 0;
+}
+
+.home-hero {
+  min-height: clamp(620px, 78vh, 820px);
+  padding: 42px 26px 72px;
+  display: flex;
+  align-items: center;
+}
+
+.home-hero__inner {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 560px) minmax(280px, 1fr);
+  gap: clamp(32px, 6vw, 92px);
+  align-items: center;
+}
+
+.home-hero__copy {
+  position: relative;
+  z-index: 2;
+}
+
+.home-hero__place {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 70px;
+}
+
+.home-hero__place span:first-child {
+  color: var(--text-red);
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-style: italic;
+  line-height: 1;
+}
+
+.home-hero__place span:last-child,
+.home-hero__meta {
+  color: var(--text-brown);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.home-hero__title {
+  max-width: 620px;
+  margin: 0;
+}
+
+.home-hero__meta {
+  margin-top: 22px;
+}
+
+.home-hero__lead {
+  max-width: 440px;
+  margin-top: 44px;
+}
+
+.home-hero__figure {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  min-height: 420px;
+}
+
+.home-hero__figure img {
+  width: min(100%, 520px);
+  max-height: 640px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 28px 42px rgba(28, 16, 8, .18));
+}
+
 .page-shell {
   width: 100%;
   overflow-x: hidden;
@@ -305,6 +388,40 @@ label {
 }
 
 @media (max-width: 720px) {
+  .home-header {
+    padding: 20px 20px 0;
+  }
+
+  .home-hero {
+    min-height: auto;
+    padding: 42px 20px 58px;
+    align-items: flex-start;
+  }
+
+  .home-hero__inner {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .home-hero__place {
+    margin-bottom: 48px;
+  }
+
+  .home-hero__lead {
+    margin-top: 34px;
+  }
+
+  .home-hero__figure {
+    justify-content: flex-start;
+    min-height: 0;
+    margin-top: 8px;
+  }
+
+  .home-hero__figure img {
+    width: min(88vw, 360px);
+    max-height: 380px;
+  }
+
   .museum-section {
     padding: 52px 20px;
   }

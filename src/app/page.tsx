@@ -100,7 +100,7 @@ export default async function HomePage() {
     ]);
     return (<main className="landing-background" style={pageStyle}>
       <div>
-        <header aria-label="Navegacion principal">
+        <header aria-label="Navegacion principal" className="home-header">
           <Link href="/" style={navTextStyle}>
             <span style={{ color: '#3A0F0E' }}>SL</span>
             <span>
@@ -116,18 +116,26 @@ export default async function HomePage() {
           <span style={navTextStyle}>ES</span>
         </header>
 
-        <section>
-          <div />
-          <div>
-            <h1 style={heroTitleStyle}>
-              Las
-              <br />
-              Estatuas
-              <br />
-              Cobran Vida.
-            </h1>
-            <span style={accentMarkStyle} />
-            <p style={quoteTextStyle}>Acercate a una estatua del pueblo, escanea su QR, y dejala que te cuente.</p>
+        <section className="home-hero">
+          <div className="home-hero__inner">
+            <div className="home-hero__copy">
+              <div className="home-hero__place">
+                <span>San Lorenzo</span>
+                <span>Cordoba · Argentina</span>
+              </div>
+              <h1 style={heroTitleStyle} className="home-hero__title">
+                Las
+                <br />
+                Estatuas
+                <br />
+                Cobran Vida.
+              </h1>
+              <p className="home-hero__meta">Patrimonio Cultural · Cordoba, Argentina</p>
+              <p style={quoteTextStyle} className="home-hero__lead">Acercate a una estatua del pueblo, escanea su QR, y dejala que te cuente.</p>
+            </div>
+            <div className="home-hero__figure" aria-hidden="true">
+              <img src="/assets/estatuas sin fondo.png" alt="" />
+            </div>
           </div>
         </section>
 
